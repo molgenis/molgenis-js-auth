@@ -21,11 +21,33 @@ Defining the application by the means of mockups.
 
 ## List of roles
 
-## Manage roles (add / remove roles)
+## Manage roles (add, edit or remove roles)
 
 ## Edit roles per user
+List of registered users and applied roles. You can add or delete roles per user in this screen.
+
+| Users  | Roles             |
+| ------ | ----------------- |
+| Sido   |                   |
+|        | GECKO_RESEARCHER  |
+|        | ALSPAC_RESEARCHER |
+|        | SU                |
+| Fleur  |                   |
 
 ## Edit users per role
+List of roles of the application you can add or remove users from the role you are editing.
+
+| Roles             | Users      |
+| ----------------- | ---------- |
+| GECKO_RESEARCHER  |            |
+|                   | Sido       |
+|                   | Fleur      |
+| ALSPAC_RESEARCHER |            |
+| BIB_RESEARCHER    |            |
+| SU                |            |
+
+
+
 
 
 
