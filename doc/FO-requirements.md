@@ -5,7 +5,7 @@
 - [ ] MUST be able to view all roles which have people assigned on
 - [ ] MUST be able to assign and remove roles
 - [ ] MUST be able to choose from all authenticated users in the authentication server
-- [ ] MUST be able to choose from all created roles in the Fusion Auth application
+- [ ] MUST be able to choose from all created roles belonging to the application
 - [ ] MUST have scoped registration tied to the Fusion Auth application in the deployment
 - [ ] MUST be able to login to the application as super user
 - [ ] MUST not be able to see or manage other applications defined in Fusion Auth
