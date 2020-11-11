@@ -8,6 +8,7 @@
 - [ ] MUST be able to choose from all created roles belonging to the application
 - [ ] MUST have scoped registration tied to the Fusion Auth application in the deployment
 - [ ] MUST be able to login to the application as super user
+- [ ] MUST only be accessible if user has "super user" role on the application
 - [ ] MUST not be able to see or manage other applications defined in Fusion Auth
 
 # UI specification
