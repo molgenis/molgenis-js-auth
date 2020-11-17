@@ -2,6 +2,8 @@
   "name": "armadillo-js-permissions",
   "version": "0.1.0",
   "private": true,
+  "author": "MOLGENIS",
+  "license": "LGPL-3",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

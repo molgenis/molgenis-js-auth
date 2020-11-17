@@ -1,6 +1,7 @@
 {
   "name": "cohort-permissions",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,8 +9,8 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "Fleur Kelpin",
-  "license": "ISC",
+  "author": "MOLGENIS",
+  "license": "LGPL-3",
   "dependencies": {
     "apollo-datasource-rest": "^0.9.3",
     "apollo-server-express": "^2.17.0",
