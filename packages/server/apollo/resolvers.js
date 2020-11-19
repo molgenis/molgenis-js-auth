@@ -30,6 +30,10 @@ module.exports = {
     unregister: async(_source, {userId}, {dataSources, applicationId}) => {
       await(dataSources.fusionAPI.unregister(userId, applicationId))
       return dataSources.fusionAPI.getUser(userId)
+    },
+    updateUserRoles: async(_source, {userId, roles}, {dataSources, applicationId}) => {
+      await(dataSources.fusionAPI.updateRegistration(userId, applicationId, roles))
+      return dataSources.fusionAPI.getUser(userId)
     }
   }
 }

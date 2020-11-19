@@ -37,4 +37,5 @@ type Registration {
 type Mutation {
   register(userId: String): User
   unregister(userId: String): User
+  updateUserRoles(userId: String, roles: [String]): User
 }
