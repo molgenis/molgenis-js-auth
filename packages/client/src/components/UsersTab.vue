@@ -22,7 +22,16 @@ export default {
   data () {
     return {
       selectedRow: null,
-      tableFields: ['email', 'firstName', 'lastName', 'roles']
+      tableFields: [
+        'email', 
+        'firstName', 
+        'lastName', 
+        {
+          key: 'roles',
+          formatter: value => {
+            return value.join(", ")
+          }   
+        }]
     }
   },
   computed: {
@@ -39,7 +48,6 @@ export default {
       this.items.splice(start, 1)
     },
     async editRoles (roles) {
-      console.log("edit Roles")
       await this.$apollo.mutate({
         mutation: gql`mutation ($userId: String!, $roles: [String]!) {
           updateUserRoles(userId: $userId, roles: $roles){
