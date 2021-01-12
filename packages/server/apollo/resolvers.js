@@ -44,6 +44,27 @@ module.exports = {
     },
     deleteRole: async(_source, {roleId}, {dataSources, applicationId}) => {
       return await(dataSources.fusionAPI.deleteRole(roleId, applicationId))
-    }
+    },
+    updateRoleMembers: async(_source, {roleName, userIds}, {dataSources, applicationId}) => {
+      const response = await dataSources.fusionAPI.searchUsers(`registrations.applicationId:${applicationId}`)
+      const registeredUsers = response.users
+      const result = []
+      for (const user of registeredUsers) {
+        const registration = user.registrations.find((reg)=>reg.applicationId === applicationId)
+        const roles = registration.roles || []
+        let updatedRoles = undefined
+        if (!roles.includes(roleName) && userIds.includes(user.id)) {
+          updatedRoles = [...roles, roleName]
+        }
+        if (roles.includes(roleName) && !userIds.includes(user.id)) {
+          updatedRoles = roles.filter(it => it !== roleName)
+        }
+        if (updatedRoles !== undefined) {
+          await dataSources.fusionAPI.updateRegistration(user.id, applicationId, updatedRoles)
+          result.push(await dataSources.fusionAPI.getUser(user.id))
+        }
+      }
+      return result
+    },
   }
 }
