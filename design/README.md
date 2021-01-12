@@ -51,11 +51,6 @@ Adding new roles is easy.
 
 ![add-role](Roles-Create_New_Role.png)
 
-### Rename existing roles
-If you made an error in for examp a new role you can update it to the correct name.
-If you made an error in the name of a new role, you can update it with the correct name.
-
-![edit-role](Roles-Create_New_Role.png)
 ## Managing users and roles
 There are several ways to manage the roles. At this moment we support two perspectives.
 
