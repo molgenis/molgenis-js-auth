@@ -9,7 +9,7 @@
       :fields="tableFields"
     ></b-table>
     <b-button-group>
-      <b-button :disabled="!selectedRow" @click="deleteRow"
+      <b-button :disabled="!selectedRow" @click="unregisterUser"
         >Unregister User</b-button
       >
       <b-button :disabled="!selectedRow" v-b-modal.modal-edit-roles
@@ -68,10 +68,6 @@ export default {
     selectRow (row) {
       this.selectedRow = row[0]
     },
-    deleteRow () {
-      const start = this.items.indexOf(this.selectedRow)
-      this.items.splice(start, 1)
-    },
     async editRoles (roles) {
       await this.$apollo.mutate({
         mutation: gql`
@@ -102,7 +98,8 @@ export default {
         }
       })
     },
-    async unregisterUser (userId) {
+    async unregisterUser () {
+      const userId = this.selectedRow['id']
       await this.$apollo.mutate({
         mutation: gql`
           mutation($userId: String!) {
