@@ -27,12 +27,6 @@ type Query {
   roles: [Role]
 }
 
-type Registration {
-  id: String!
-  applicationId: String!
-  roles: [String]
-}
-
 type Mutation {
   register(userId: String): User
   unregister(userId: String): User
@@ -40,6 +34,6 @@ type Mutation {
   createRole(name: String): Role
   # Returns the ID of the deleted Role
   deleteRole(roleId: String): String
-  # edit role name
-  # updateRoleMembers(roleId, users)
+  # Returns all users that got updated to refresh them in the cache
+  updateRoleMembers(roleName: String, userIds: [String]): [User]
 }
