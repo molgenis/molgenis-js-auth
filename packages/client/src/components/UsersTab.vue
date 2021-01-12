@@ -35,6 +35,18 @@ import gql from 'graphql-tag'
 import RoleSelectionModal from './RoleSelectionModal'
 import RegisterUserModal from './RegisterUserModal.vue'
 
+const REGISTERED_USERS_QUERY = gql`
+      query {
+        registeredUsers {
+          id
+          email
+          firstName
+          lastName
+          roles
+        }
+      }
+    `
+
 export default {
   components: {
     RoleSelectionModal,
@@ -89,16 +101,23 @@ export default {
         mutation: gql`mutation ($userId: String!) {
           register(userId: $userId) {
             id
+            email
+            firstName
+            lastName
             roles
-            registered
           }
         }`,
         variables: {
           userId
+        },
+        update: (store, { data: { register } }) => {
+          const users = store.readQuery({ query: REGISTERED_USERS_QUERY }).registeredUsers
+          store.writeQuery({ query: REGISTERED_USERS_QUERY, data: { registeredUsers: [...users, register] } })
         }
       })
     },
     async unregisterUser () {
+      const userId = this.selectedRow.id
       await this.$apollo.mutate({
         mutation: gql`
           mutation($userId: String!) {
@@ -108,23 +127,20 @@ export default {
           }
         `,
         variables: {
-          userId: this.selectedRow.id
+          userId
+        },
+        update: (store) => {
+          const users = store.readQuery({ query: REGISTERED_USERS_QUERY }).registeredUsers
+          store.writeQuery({
+            query: REGISTERED_USERS_QUERY,
+            data: { registeredUsers: users.filter(it => it.id !== userId) }
+          })
         }
       })
     }
   },
   apollo: {
-    registeredUsers: gql`
-      query {
-        registeredUsers {
-          id
-          email
-          firstName
-          lastName
-          roles
-        }
-      }
-    `
+    registeredUsers: REGISTERED_USERS_QUERY
   }
 }
 </script>
