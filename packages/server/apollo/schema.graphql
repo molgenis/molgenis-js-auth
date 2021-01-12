@@ -24,7 +24,7 @@ type Query {
   application: Application
   registeredUsers: [User]
   users(searchQuery: String): [User]
-  # roles
+  roles: [Role]
 }
 
 type Registration {
@@ -37,7 +37,9 @@ type Mutation {
   register(userId: String): User
   unregister(userId: String): User
   updateUserRoles(userId: String, roles: [String]): User
-  # create new role(name)
+  createRole(name: String): Role
+  # Returns the ID of the deleted Role
+  deleteRole(roleId: String): String
   # edit role name
   # updateRoleMembers(roleId, users)
 }

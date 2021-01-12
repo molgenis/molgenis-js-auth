@@ -10,6 +10,10 @@ module.exports = {
       const response = await dataSources.fusionAPI.searchUsers(searchQuery)
       return response.users
     },
+    roles: async (_source, _args, { dataSources, applicationId }) => {
+      const response = await dataSources.fusionAPI.getApplication(applicationId)
+      return response.roles
+    },
   },
   User: {
     roles: (user, _args, {applicationId}) => {
@@ -34,6 +38,12 @@ module.exports = {
     updateUserRoles: async(_source, {userId, roles}, {dataSources, applicationId}) => {
       await(dataSources.fusionAPI.updateRegistration(userId, applicationId, roles))
       return dataSources.fusionAPI.getUser(userId)
+    },
+    createRole: async(_source, {name}, {dataSources, applicationId}) => {
+      return await(dataSources.fusionAPI.createRole(name, applicationId))
+    },
+    deleteRole: async(_source, {roleId}, {dataSources, applicationId}) => {
+      return await(dataSources.fusionAPI.deleteRole(roleId, applicationId))
     }
   }
 }

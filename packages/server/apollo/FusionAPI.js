@@ -16,6 +16,11 @@ class FusionAPI extends RESTDataSource {
     return response.user
   }
 
+  async getApplication(applicationId) {
+    const response = await this.get(`application/${applicationId}`)
+    return response
+  }
+
   async updateUser(userId, roles) {
     const response = await this.post(`user/`)
   }
@@ -35,6 +40,16 @@ class FusionAPI extends RESTDataSource {
   async getApplication(applicationId) {
     const response = await this.get(`application/${applicationId}`)
     return response.application
+  }
+
+  async createRole(name, applicationId) {
+    const response = await this.post(`application/${applicationId}/role`,{ role: {name} })
+    return response.role
+  }
+
+  async deleteRole(roleId, applicationId) {
+    await this.delete(`application/${applicationId}/role/${roleId}`)
+    return roleId
   }
 
   async register(userId, applicationId) {
