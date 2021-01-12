@@ -41,6 +41,9 @@ module.exports = {
     },
     createRole: async(_source, {name}, {dataSources, applicationId}) => {
       return await(dataSources.fusionAPI.createRole(name, applicationId))
+    },
+    deleteRole: async(_source, {roleId}, {dataSources, applicationId}) => {
+      return await(dataSources.fusionAPI.deleteRole(roleId, applicationId))
     }
   }
 }

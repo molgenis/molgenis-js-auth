@@ -47,6 +47,11 @@ class FusionAPI extends RESTDataSource {
     return response.role
   }
 
+  async deleteRole(roleId, applicationId) {
+    await this.delete(`application/${applicationId}/role/${roleId}`)
+    return roleId
+  }
+
   async register(userId, applicationId) {
     return this.post(`user/registration/${userId}`, {
       registration: {

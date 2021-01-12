@@ -38,6 +38,8 @@ type Mutation {
   unregister(userId: String): User
   updateUserRoles(userId: String, roles: [String]): User
   createRole(name: String): Role
+  # Returns the ID of the deleted Role
+  deleteRole(roleId: String): String
   # edit role name
   # updateRoleMembers(roleId, users)
 }
