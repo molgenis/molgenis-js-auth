@@ -24,7 +24,7 @@ type Query {
   application: Application
   registeredUsers: [User]
   users(searchQuery: String): [User]
-  # roles
+  roles: [Role]
 }
 
 type Registration {

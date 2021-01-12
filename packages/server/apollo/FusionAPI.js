@@ -16,6 +16,11 @@ class FusionAPI extends RESTDataSource {
     return response.user
   }
 
+  async getApplication(applicationId) {
+    const response = await this.get(`application/${applicationId}`)
+    return response
+  }
+
   async updateUser(userId, roles) {
     const response = await this.post(`user/`)
   }

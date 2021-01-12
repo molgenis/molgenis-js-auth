@@ -10,6 +10,10 @@ module.exports = {
       const response = await dataSources.fusionAPI.searchUsers(searchQuery)
       return response.users
     },
+    roles: async (_source, _args, { dataSources, applicationId }) => {
+      const response = await dataSources.fusionAPI.getApplication(applicationId)
+      return response.roles
+    },
   },
   User: {
     roles: (user, _args, {applicationId}) => {
