@@ -99,7 +99,6 @@ export default {
       })
     },
     async unregisterUser () {
-      const userId = this.selectedRow['id']
       await this.$apollo.mutate({
         mutation: gql`
           mutation($userId: String!) {
@@ -109,7 +108,7 @@ export default {
           }
         `,
         variables: {
-          userId
+          userId: this.selectedRow.id
         }
       })
     }

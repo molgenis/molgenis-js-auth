@@ -37,8 +37,9 @@ export default {
       this.selected = this.initialSelection
     },
     onOk: function () {
-      this.$emit('ok', this.selected)
-      // TODO only emit if selected changed
+      if (this.selection !== this.initialSelection) {
+        this.$emit('ok', this.selected.filter(Boolean))
+      }
     }
   },
   apollo: {
