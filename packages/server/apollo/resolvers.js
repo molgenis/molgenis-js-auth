@@ -38,6 +38,9 @@ module.exports = {
     updateUserRoles: async(_source, {userId, roles}, {dataSources, applicationId}) => {
       await(dataSources.fusionAPI.updateRegistration(userId, applicationId, roles))
       return dataSources.fusionAPI.getUser(userId)
+    },
+    createRole: async(_source, {name}, {dataSources, applicationId}) => {
+      return await(dataSources.fusionAPI.createRole(name, applicationId))
     }
   }
 }
