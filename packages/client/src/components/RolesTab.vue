@@ -9,14 +9,19 @@
       @row-selected="selectRow"
     ></b-table>
     <b-button-group>
-      <b-button :disabled="!selectedRow" @click="deleteRow"
-        >Delete Role</b-button
+      <b-button
+        :disabled="!selectedRow || superUserRoleSelected"
+        @click="confirmDeleteRole"
+        variant="primary"
+        ><b-icon-journal-minus /> Delete Role</b-button
       >
-      <b-button :disabled="!selectedRow" @click="editRoles"
-        >Edit Members</b-button
+      <b-button :disabled="!selectedRow" variant="primary"
+        ><b-icon-journal-text /> Edit Members</b-button
       >
     </b-button-group>
-    <b-button class="ml-3">Create New Role</b-button>
+    <b-button class="ml-3" variant="primary"
+      ><b-icon-journal-plus /> Create New Role</b-button
+    >
   </div>
 </template>
 
@@ -41,8 +46,25 @@ export default {
       const start = this.items.indexOf(this.selectedRow)
       this.items.splice(start, 1)
     },
-    editRoles: function () {},
-    registerUser: function () {}
+    confirmDeleteRole () {
+      this.$bvModal.msgBoxConfirm('Are you sure you want to delete role ' + this.selectedRow.name + '?', {
+        centered: true,
+        okVariant: 'danger'
+      })
+        .then((ok) => {
+          if (ok) {
+            this.deleteRole(this.selectedRow.id)
+          }
+        })
+    },
+    deleteRole (roleId) {
+      console.log("deleting role " + roleId)
+    }
+  },
+  computed: {
+    superUserRoleSelected () {
+      return this.selectedRow && this.selectedRow.name === 'SU'
+    }
   },
   apollo: {
     roles: gql`query {
