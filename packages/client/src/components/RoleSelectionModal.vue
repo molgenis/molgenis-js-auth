@@ -3,7 +3,7 @@
     id="modal-edit-roles"
     centered
     lazy
-    :title="title"
+    :title="'Edit roles of ' + email"
     @ok="onOk"
     @show="reset"
   >
@@ -29,7 +29,7 @@ export default {
     }
   },
   props: {
-    title: String,
+    email: String,
     initialSelection: Array
   },
   methods: {
@@ -38,7 +38,7 @@ export default {
     },
     onOk: function () {
       if (this.selectionChanged && !this.initialSelection.includes('SU') && this.selection.includes('SU')) {
-        this.$bvModal.msgBoxConfirm('Are you sure you want to make this user a Super User?', {
+        this.$bvModal.msgBoxConfirm('Are you sure you want to make ' + this.email + ' a super user?', {
           centered: true,
           okVariant: 'danger'
         })

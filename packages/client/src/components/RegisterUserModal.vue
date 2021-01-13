@@ -3,6 +3,8 @@
     id="modal-register-user"
     centered
     lazy
+    scrollable
+    size="lg"
     title="Register User"
     @ok="onOk"
     @show="reset"
@@ -18,7 +20,9 @@
         placeholder="Search users..."
       ></b-form-input>
     </b-input-group>
-    <b-table ref="table"
+    <b-table
+      ref="table"
+      v-if="searchQuery"
       hover
       :items="rows"
       :fields="tableFields"
@@ -26,14 +30,14 @@
       select-mode="single"
       @row-selected="selectRow"
     >
-    <template #cell(registered)="data">
-      <span v-if="!data.item.registered">
-        <b-icon-x font-scale="1.8"/>
-      </span>
-      <span v-if="data.item.registered">
-        <b-icon-check font-scale="1.8"/>
-      </span>
-    </template>
+      <template #cell(registered)="data">
+        <span v-if="!data.item.registered">
+          <b-icon-x font-scale="1.8" />
+        </span>
+        <span v-if="data.item.registered">
+          <b-icon-check font-scale="1.8" />
+        </span>
+      </template>
     </b-table>
   </b-modal>
 </template>
@@ -126,16 +130,16 @@ export default {
 </script>
 
 <style>
-  .table-hover .table-row-disabled:hover {
-    cursor: not-allowed !important;
-    background: #ffffff;
-    color: #808080;
-  }
-  .table .table-row-disabled {
-    color: #808080;
-  }
-  .personRegistered {
-    vertical-align: center;
-    text-align: center;
-  }
+.table-hover .table-row-disabled:hover {
+  cursor: not-allowed !important;
+  background: #ffffff;
+  color: #808080;
+}
+.table .table-row-disabled {
+  color: #808080;
+}
+.personRegistered {
+  vertical-align: center;
+  text-align: center;
+}
 </style>

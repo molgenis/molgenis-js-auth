@@ -28,7 +28,7 @@
 
     <role-selection-modal
       v-if="selectedRow"
-      :title="roleEditTitle"
+      :email="selectedEmail"
       :initial-selection="selectedRow.roles"
       @ok="editRoles"
     />
