@@ -9,7 +9,7 @@
       :fields="tableFields"
     ></b-table>
     <b-button-group>
-      <b-button :disabled="!selectedRow" @click="unregisterUser"
+      <b-button :disabled="!selectedRow" @click="confirmUnregisterUser"
         >Unregister User</b-button
       >
       <b-button :disabled="!selectedRow" v-b-modal.modal-edit-roles
@@ -93,8 +93,23 @@ export default {
         variables: {
           userId: this.selectedRow.id,
           roles
+        },
+        update: (store, { data: { user } }) => {
+          console.log(user)
         }
       })
+    },
+    confirmUnregisterUser () {
+      const userId = this.selectedRow.id
+      this.$bvModal.msgBoxConfirm('Are you sure you want to unregister ' + this.selectedRow.email + '?', {
+        centered: true,
+        okVariant: 'danger'
+      })
+        .then((ok) => {
+          if (ok) {
+            this.unregisterUser(userId)
+          }
+        })
     },
     async registerUser (userId) {
       await this.$apollo.mutate({
@@ -116,8 +131,7 @@ export default {
         }
       })
     },
-    async unregisterUser () {
-      const userId = this.selectedRow.id
+    async unregisterUser (userId) {
       await this.$apollo.mutate({
         mutation: gql`
           mutation($userId: String!) {
