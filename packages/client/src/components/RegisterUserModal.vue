@@ -18,28 +18,39 @@
         placeholder="Search users..."
       ></b-form-input>
     </b-input-group>
-    <b-table
+    <b-table ref="table"
       hover
       :items="rows"
       :fields="tableFields"
       selectable
       select-mode="single"
       @row-selected="selectRow"
-    ></b-table>
+    >
+    <template #cell(registered)="data">
+      <span v-if="!data.item.registered">
+        <b-icon-x font-scale="1.8"/>
+      </span>
+      <span v-if="data.item.registered">
+        <b-icon-check font-scale="1.8"/>
+      </span>
+    </template>
+    </b-table>
   </b-modal>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import { BIconCheck, BIconX } from 'bootstrap-vue'
 
 export default {
   data () {
     return {
       searchQuery: '',
       tableFields: [
-        'email',
-        'firstName',
-        'lastName'
+        { key: 'email' },
+        { key: 'firstName' },
+        { key: 'lastName' },
+        { key: 'registered', tdClass: 'personRegistered' }
       ],
       selectedUserId: null
     }
@@ -49,7 +60,16 @@ export default {
       if (this.searchQuery === '') {
         return null
       } else {
-        return this.users
+        var users = []
+        if (this.users && this.users.length > 0) {
+          users = Object.assign([], this.users)
+          users.forEach((user) => {
+            if (user.registered) {
+              user = this.setRowVariant(user)
+            }
+          })
+        }
+        return users
       }
     }
   },
@@ -63,7 +83,20 @@ export default {
       this.$emit('ok', this.selectedUserId)
     },
     selectRow (rows) {
-      this.selectedUserId = rows[0]['id']
+      var selected = []
+      rows.forEach((user, index) => {
+        if (user.registered) {
+          this.$refs.table.unselectRow(index)
+        } else {
+          selected.push(user)
+        }
+      })
+      if (selected.length > 0) {
+        this.selectedUserId = selected[0]['id']
+      }
+    },
+    setRowVariant (item) {
+      return (item._rowVariant = 'row-disabled')
     }
   },
   apollo: {
@@ -89,6 +122,25 @@ export default {
       },
       debounce: 500
     }
+  },
+  components: {
+    BIconCheck,
+    BIconX
   }
 }
 </script>
+
+<style>
+  .table-hover .table-row-disabled:hover {
+    cursor: not-allowed !important;
+    background: #ffffff;
+    color: #808080;
+  }
+  .table .table-row-disabled {
+    color: #808080;
+  }
+  .personRegistered {
+    vertical-align: center;
+    text-align: center;
+  }
+</style>
