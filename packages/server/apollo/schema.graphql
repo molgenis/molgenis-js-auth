@@ -8,8 +8,6 @@ type Role {
   id: String!
   name: String!
   description: String
-  isDefault: Boolean!
-  isSuperRole: Boolean!
 }
 
 type User {
@@ -26,15 +24,16 @@ type Query {
   application: Application
   registeredUsers: [User]
   users(searchQuery: String): [User]
-}
-
-type Registration {
-  id: String!
-  applicationId: String!
-  roles: [String]
+  roles: [Role]
 }
 
 type Mutation {
   register(userId: String): User
   unregister(userId: String): User
+  updateUserRoles(userId: String, roles: [String]): User
+  createRole(name: String): Role
+  # Returns the ID of the deleted Role
+  deleteRole(roleId: String): String
+  # Returns all users that got updated to refresh them in the cache
+  updateRoleMembers(roleName: String, userIds: [String]): [User]
 }

@@ -10,6 +10,10 @@ module.exports = {
       const response = await dataSources.fusionAPI.searchUsers(searchQuery)
       return response.users
     },
+    roles: async (_source, _args, { dataSources, applicationId }) => {
+      const response = await dataSources.fusionAPI.getApplication(applicationId)
+      return response.roles
+    },
   },
   User: {
     roles: (user, _args, {applicationId}) => {
@@ -30,6 +34,37 @@ module.exports = {
     unregister: async(_source, {userId}, {dataSources, applicationId}) => {
       await(dataSources.fusionAPI.unregister(userId, applicationId))
       return dataSources.fusionAPI.getUser(userId)
-    }
+    },
+    updateUserRoles: async(_source, {userId, roles}, {dataSources, applicationId}) => {
+      await(dataSources.fusionAPI.updateRegistration(userId, applicationId, roles))
+      return dataSources.fusionAPI.getUser(userId)
+    },
+    createRole: async(_source, {name}, {dataSources, applicationId}) => {
+      return await(dataSources.fusionAPI.createRole(name, applicationId))
+    },
+    deleteRole: async(_source, {roleId}, {dataSources, applicationId}) => {
+      return await(dataSources.fusionAPI.deleteRole(roleId, applicationId))
+    },
+    updateRoleMembers: async(_source, {roleName, userIds}, {dataSources, applicationId}) => {
+      const response = await dataSources.fusionAPI.searchUsers(`registrations.applicationId:${applicationId}`)
+      const registeredUsers = response.users
+      const result = []
+      for (const user of registeredUsers) {
+        const registration = user.registrations.find((reg)=>reg.applicationId === applicationId)
+        const roles = registration.roles || []
+        let updatedRoles = undefined
+        if (!roles.includes(roleName) && userIds.includes(user.id)) {
+          updatedRoles = [...roles, roleName]
+        }
+        if (roles.includes(roleName) && !userIds.includes(user.id)) {
+          updatedRoles = roles.filter(it => it !== roleName)
+        }
+        if (updatedRoles !== undefined) {
+          await dataSources.fusionAPI.updateRegistration(user.id, applicationId, updatedRoles)
+          result.push(await dataSources.fusionAPI.getUser(user.id))
+        }
+      }
+      return result
+    },
   }
 }

@@ -12,17 +12,42 @@ class FusionAPI extends RESTDataSource {
 
   async getUser(userId) {
     const response = await this.get(`user/${userId}`)
-    console.log(response)
     return response.user
   }
 
-  async getRegistrations(userId, applicationId) {
+  async getApplication(applicationId) {
+    const response = await this.get(`application/${applicationId}`)
+    return response
+  }
+
+  async getRegistration(userId, applicationId) {
     return this.get(`user/registration/${userId}/${applicationId}`)
+  }
+
+  async updateRegistration(userId, applicationId, roles) {
+    const registration = await this.getRegistration(userId, applicationId)
+    return await this.put(`user/registration/${userId}`, {
+      registration: {
+        ...registration,
+        roles,
+        applicationId
+      }  
+    })
   }
 
   async getApplication(applicationId) {
     const response = await this.get(`application/${applicationId}`)
     return response.application
+  }
+
+  async createRole(name, applicationId) {
+    const response = await this.post(`application/${applicationId}/role`,{ role: {name} })
+    return response.role
+  }
+
+  async deleteRole(roleId, applicationId) {
+    await this.delete(`application/${applicationId}/role/${roleId}`)
+    return roleId
   }
 
   async register(userId, applicationId) {
