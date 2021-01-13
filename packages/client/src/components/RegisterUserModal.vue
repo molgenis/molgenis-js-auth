@@ -15,7 +15,6 @@
       <b-form-input
         type="search"
         v-model="searchQuery"
-        debounce="500"
         placeholder="Search users..."
       ></b-form-input>
     </b-input-group>
@@ -87,7 +86,8 @@ export default {
       },
       skip () {
         return !this.searchQuery
-      }
+      },
+      debounce: 500
     }
   }
 }

@@ -14,7 +14,7 @@
       :options="application.roles"
       value-field="name"
       text-field="name"
-      v-model="selected"
+      v-model="selection"
     />
   </b-modal>
 </template>
@@ -25,7 +25,7 @@ import gql from 'graphql-tag'
 export default {
   data () {
     return {
-      selected: this.initialSelection
+      selection: this.initialSelection
     }
   },
   props: {
@@ -34,12 +34,32 @@ export default {
   },
   methods: {
     reset: function () {
-      this.selected = this.initialSelection
+      this.selection = this.initialSelection
     },
     onOk: function () {
-      if (this.selection !== this.initialSelection) {
-        this.$emit('ok', this.selected.filter(Boolean))
+      if (this.selectionChanged && !this.initialSelection.includes('SU') && this.selection.includes('SU')) {
+        this.$bvModal.msgBoxConfirm('Are you sure you want to make this user a Super User?', {
+          centered: true,
+          okVariant: 'danger'
+        })
+          .then((ok) => {
+            if (ok) {
+              this.emitOk()
+            }
+          })
+      } else {
+        this.emitOk()
       }
+    },
+    emitOk () {
+      if (this.selectionChanged) {
+        this.$emit('ok', this.selection.filter(Boolean))
+      }
+    }
+  },
+  computed: {
+    selectionChanged () {
+      return this.selection !== this.initialSelection
     }
   },
   apollo: {

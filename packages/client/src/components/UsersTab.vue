@@ -93,9 +93,6 @@ export default {
         variables: {
           userId: this.selectedRow.id,
           roles
-        },
-        update: (store, { data: { user } }) => {
-          console.log(user)
         }
       })
     },
