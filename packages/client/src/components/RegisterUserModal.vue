@@ -27,28 +27,17 @@
       select-mode="single"
       @row-selected="selectRow"
     >
-    <template #cell(registered)="data" >
-      <span v-if="!data.item.registered" class="center">
-        <b-icon-x font-scale="1.5"/>
+    <template #cell(registered)="data">
+      <span v-if="!data.item.registered">
+        <b-icon-x font-scale="1.8"/>
       </span>
-      <span v-if="data.item.registered" class="center">
-        <b-icon-check font-scale="1.5"/>
+      <span v-if="data.item.registered">
+        <b-icon-check font-scale="1.8"/>
       </span>
     </template>
     </b-table>
   </b-modal>
 </template>
-
-<style>
-  .table-hover .table-row-disabled:hover {
-    cursor: not-allowed !important;
-    background: #ffffff;
-    color: #808080;
-  }
-  .table .table-row-disabled {
-    color: #808080;
-  }
-</style>
 
 <script>
 import gql from 'graphql-tag'
@@ -59,10 +48,10 @@ export default {
     return {
       searchQuery: '',
       tableFields: [
-        'email',
-        'firstName',
-        'lastName',
-        'registered'
+        { key: 'email' },
+        { key: 'firstName' },
+        { key: 'lastName' },
+        { key: 'registered', tdClass: 'personRegistered' }
       ],
       selectedUserId: null
     }
@@ -140,3 +129,18 @@ export default {
   }
 }
 </script>
+
+<style>
+  .table-hover .table-row-disabled:hover {
+    cursor: not-allowed !important;
+    background: #ffffff;
+    color: #808080;
+  }
+  .table .table-row-disabled {
+    color: #808080;
+  }
+  .personRegistered {
+    vertical-align: center;
+    text-align: center;
+  }
+</style>
