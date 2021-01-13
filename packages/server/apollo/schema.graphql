@@ -7,7 +7,7 @@ type Application {
 type Role {
   id: String!
   name: String!
-  description: String
+  isSuperRole: Boolean
 }
 
 type User {
@@ -31,7 +31,7 @@ type Mutation {
   register(userId: String): User
   unregister(userId: String): User
   updateUserRoles(userId: String, roles: [String]): User
-  createRole(name: String): Role
+  createRole(name: String, isSuperRole: Boolean): Role
   # Returns the ID of the deleted Role
   deleteRole(roleId: String): String
   # Returns all users that got updated to refresh them in the cache
