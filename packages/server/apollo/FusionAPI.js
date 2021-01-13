@@ -40,8 +40,8 @@ class FusionAPI extends RESTDataSource {
     return response.application
   }
 
-  async createRole(name, applicationId) {
-    const response = await this.post(`application/${applicationId}/role`,{ role: {name} })
+  async createRole(name, isSuperRole, applicationId) {
+    const response = await this.post(`application/${applicationId}/role`,{ role: {name, isSuperRole} })
     return response.role
   }
 
