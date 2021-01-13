@@ -40,7 +40,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import { BIconCheck, BIconX } from 'bootstrap-vue'
 
 export default {
   data () {
@@ -122,10 +121,6 @@ export default {
       },
       debounce: 500
     }
-  },
-  components: {
-    BIconCheck,
-    BIconX
   }
 }
 </script>

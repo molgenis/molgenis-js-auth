@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { createProvider } from './vue-apollo'
-import { BootstrapVue, BIcon, BIconSearch, BIconCheck, BIconX } from 'bootstrap-vue'
+import { BootstrapVue, BIcon, BIconSearch, BIconCheck, BIconX, BIconPersonPlusFill, BIconPersonDashFill, BIconPersonLinesFill } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -12,6 +12,9 @@ Vue.component('BIcon', BIcon)
 Vue.component('BIconSearch', BIconSearch)
 Vue.component('BIconCheck', BIconCheck)
 Vue.component('BIconX', BIconX)
+Vue.component('BIconPersonPlusFill', BIconPersonPlusFill)
+Vue.component('BIconPersonDashFill', BIconPersonDashFill)
+Vue.component('BIconPersonLinesFill', BIconPersonLinesFill)
 
 new Vue({
   apolloProvider: createProvider(),

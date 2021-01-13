@@ -9,15 +9,21 @@
       :fields="tableFields"
     ></b-table>
     <b-button-group>
-      <b-button :disabled="!selectedRow" @click="confirmUnregisterUser"
-        >Unregister User</b-button
+      <b-button
+        :disabled="!selectedRow"
+        @click="confirmUnregisterUser"
+        variant="primary"
+        ><b-icon-person-dash-fill /> Unregister User</b-button
       >
-      <b-button :disabled="!selectedRow" v-b-modal.modal-edit-roles
-        >Edit Roles</b-button
+      <b-button
+        :disabled="!selectedRow"
+        v-b-modal.modal-edit-roles
+        variant="primary"
+        ><b-icon-person-lines-fill /> Edit Roles</b-button
       >
     </b-button-group>
-    <b-button class="ml-3" v-b-modal.modal-register-user
-      >Register User</b-button
+    <b-button class="ml-3" v-b-modal.modal-register-user variant="primary"
+      ><b-icon-person-plus-fill /> Register User</b-button
     >
 
     <role-selection-modal
@@ -69,11 +75,8 @@ export default {
     }
   },
   computed: {
-    roleEditTitle () {
-      return (
-        this.selectedRow &&
-        `Edit Roles of ${this.selectedRow.firstName} ${this.selectedRow.lastName}`
-      )
+    selectedEmail () {
+      return this.selectedRow && this.selectedRow.email
     }
   },
   methods: {
