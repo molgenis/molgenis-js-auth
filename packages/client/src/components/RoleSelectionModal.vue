@@ -8,10 +8,10 @@
     @show="reset"
   >
     <b-form-checkbox-group
-      v-if="application"
+      v-if="roles"
       stacked
       name="role-selection"
-      :options="application.roles"
+      :options="roles"
       value-field="name"
       text-field="name"
       v-model="selection"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import { ROLES_QUERY } from '@/assets/queries.js'
 
 export default {
   data () {
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     superRoleNames () {
-      return this.application.roles.map(role => {
+      return this.roles.map(role => {
         if (role.isSuperRole) {
           return role.name
         }
@@ -75,14 +75,7 @@ export default {
     }
   },
   apollo: {
-    application: gql`query {
-      application {
-        roles {
-          name
-          isSuperRole
-        }
-      }
-    }`
+    roles: ROLES_QUERY
   }
 }
 </script>
