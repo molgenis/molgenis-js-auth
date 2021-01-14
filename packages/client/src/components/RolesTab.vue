@@ -4,10 +4,18 @@
       hover
       selectable
       select-mode="single"
-      :items="roles"
+      :items="rolesWithMembers"
       :fields="tableFields"
       @row-selected="selectRow"
-    ></b-table>
+    >
+      <template #cell(members)="data">
+        <span v-for="member in data.item.members" :key="member.id" class="badges mr-1">
+          <b-badge variant="primary">
+            {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
+          </b-badge>
+        </span>
+      </template>
+    </b-table>
     <b-button-group>
       <b-button
         :disabled="!selectedRow || superUserRoleSelected"
@@ -22,7 +30,6 @@
     <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role
       ><b-icon-journal-plus /> Create New Role</b-button
     >
-
     <create-role-modal @ok="createRole" />
   </div>
 </template>
@@ -38,7 +45,8 @@ export default {
     return {
       selectedRow: null,
       tableFields: [
-        'name'
+        'name',
+        'members'
       ]
     }
   },
@@ -112,10 +120,25 @@ export default {
   computed: {
     superUserRoleSelected () {
       return this.selectedRow && this.selectedRow.isSuperRole
+    },
+    rolesWithMembers () {
+      const roles = this.roles && this.roles.map(role => (
+        { ...role,
+          members: this.registeredUsers && this.registeredUsers.filter(user => user.roles.includes(role.name))
+        }
+      ))
+      return roles || []
     }
   },
   apollo: {
-    roles: ROLES_QUERY
+    roles: ROLES_QUERY,
+    registeredUsers: REGISTERED_USERS_QUERY
   }
 }
 </script>
+
+<style scoped>
+.badges {
+  font-size: 20px;
+}
+</style>
