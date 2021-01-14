@@ -23,14 +23,14 @@
       ><b-icon-journal-plus /> Create New Role</b-button
     >
 
-    <create-role-modal @ok="createRole"/>
+    <create-role-modal @ok="createRole" />
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import CreateRoleModal from './CreateRoleModal.vue'
-import { ROLES_QUERY } from '@/assets/queries.js'
+import { ROLES_QUERY, REGISTERED_USERS_QUERY } from '@/assets/queries.js'
 
 export default {
   components: { CreateRoleModal },
@@ -53,11 +53,14 @@ export default {
       })
         .then((ok) => {
           if (ok) {
-            this.deleteRole(this.selectedRow.id)
+            this.deleteRole()
           }
         })
     },
-    async deleteRole (roleId) {
+    async deleteRole () {
+      const roleId = this.selectedRow.id
+      const roleName = this.selectedRow.name
+
       await this.$apollo.mutate({
         mutation: gql`
           mutation($roleId: String!) {
@@ -68,10 +71,21 @@ export default {
           roleId
         },
         update: (store) => {
-          const users = store.readQuery({ query: ROLES_QUERY }).roles
+          const roles = store.readQuery({ query: ROLES_QUERY }).roles
           store.writeQuery({
             query: ROLES_QUERY,
-            data: { roles: users.filter(it => it.id !== roleId) }
+            data: {
+              roles: roles.filter(it => it.id !== roleId)
+            }
+          })
+          const users = store.readQuery({ query: REGISTERED_USERS_QUERY }).registeredUsers
+          store.writeQuery({
+            query: REGISTERED_USERS_QUERY,
+            data: {
+              registeredUsers: users.map(user => (
+                { ...user, roles: user.roles.filter(it => it !== roleName) }
+              ))
+            }
           })
         }
       })
