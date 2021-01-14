@@ -35,7 +35,7 @@ const ROLES_QUERY = gql`query {
       roles {
         id
         name
-        description
+        isSuperRole
       }
     }`
 
@@ -45,8 +45,7 @@ export default {
     return {
       selectedRow: null,
       tableFields: [
-        'name',
-        'description'
+        'name'
       ]
     }
   },
@@ -90,7 +89,7 @@ export default {
           createRole(name: $roleName) {
             id
             name
-            description
+            isSuperRole
           }
         }`,
         variables: {
@@ -105,7 +104,7 @@ export default {
   },
   computed: {
     superUserRoleSelected () {
-      return this.selectedRow && this.selectedRow.name === 'SU'
+      return this.selectedRow && this.selectedRow.isSuperRole
     }
   },
   apollo: {

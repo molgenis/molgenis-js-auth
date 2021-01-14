@@ -36,30 +36,42 @@ export default {
     reset: function () {
       this.selection = this.initialSelection
     },
+    isPromotedToSuperUser () {
+      return this.superRoleNames.some(name => !this.initialSelection.includes(name) && this.selection.includes(name))
+    },
     onOk: function () {
-      if (this.selectionChanged && !this.initialSelection.includes('SU') && this.selection.includes('SU')) {
-        this.$bvModal.msgBoxConfirm('Are you sure you want to make ' + this.email + ' a super user?', {
-          centered: true,
-          okVariant: 'danger'
-        })
-          .then((ok) => {
-            if (ok) {
-              this.emitOk()
-            }
+      if (this.selectionChanged) {
+        if (this.isPromotedToSuperUser()) {
+          this.$bvModal.msgBoxConfirm('Are you sure you want to make ' + this.email + ' a super user?', {
+            centered: true,
+            okVariant: 'danger'
           })
-      } else {
-        this.emitOk()
+            .then((ok) => {
+              if (ok) {
+                this.emitOk()
+              }
+            })
+        } else {
+          this.emitOk()
+        }
       }
     },
     emitOk () {
       if (this.selectionChanged) {
         this.$emit('ok', this.selection.filter(Boolean))
       }
+    },
+    selectionChanged () {
+      return this.selection !== this.initialSelection
     }
   },
   computed: {
-    selectionChanged () {
-      return this.selection !== this.initialSelection
+    superRoleNames () {
+      return this.application.roles.map(role => {
+        if (role.isSuperRole) {
+          return role.name
+        }
+      }).filter(Boolean)
     }
   },
   apollo: {
@@ -67,6 +79,7 @@ export default {
       application {
         roles {
           name
+          isSuperRole
         }
       }
     }`
