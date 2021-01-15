@@ -9,7 +9,11 @@
       @row-selected="selectRow"
     >
       <template #cell(members)="data">
-        <span v-for="member in data.item.members" :key="member.id" class="badges mr-1">
+        <span
+          v-for="member in data.item.members"
+          :key="member.id"
+          class="badges mr-1"
+        >
           <b-badge variant="primary">
             {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
           </b-badge>
@@ -23,7 +27,10 @@
         variant="primary"
         ><b-icon-journal-minus /> Delete Role</b-button
       >
-      <b-button :disabled="!selectedRow" variant="primary"
+      <b-button
+        :disabled="!selectedRow"
+        variant="primary"
+        v-b-modal.modal-edit-members
         ><b-icon-journal-text /> Edit Members</b-button
       >
     </b-button-group>
@@ -31,16 +38,26 @@
       ><b-icon-journal-plus /> Create New Role</b-button
     >
     <create-role-modal @ok="createRole" />
+    <member-selection-modal
+      v-if="selectedRow"
+      :role="selectedRow.name"
+      :initial-selection="selectedRow.members.map(member => member.email)"
+      @ok="editMembers"
+    />
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import CreateRoleModal from '@/components/modals/CreateRoleModal.vue'
+import MemberSelectionModal from '@/components/modals/MemberSelectionModal.vue'
 import { ROLES_QUERY, REGISTERED_USERS_QUERY } from '@/assets/queries.js'
 
 export default {
-  components: { CreateRoleModal },
+  components: {
+    CreateRoleModal,
+    MemberSelectionModal
+  },
   data () {
     return {
       selectedRow: null,
@@ -113,6 +130,25 @@ export default {
         update: (store, { data: { createRole } }) => {
           const roles = store.readQuery({ query: ROLES_QUERY }).roles
           store.writeQuery({ query: ROLES_QUERY, data: { roles: [...roles, createRole] } })
+        }
+      })
+    },
+    async editMembers (memberEmails) {
+      await this.$apollo.mutate({
+        mutation: gql`
+          mutation($roleName: String!, $userIds: [String]!) {
+            updateRoleMembers(roleName: $roleName, userIds: $userIds) {
+              id
+              firstName
+              lastName
+              email
+              roles
+            }
+          }
+        `,
+        variables: {
+          roleName: this.selectedRow.name,
+          userIds: memberEmails.map(email => this.registeredUsers.find(user => user.email === email).id)
         }
       })
     }

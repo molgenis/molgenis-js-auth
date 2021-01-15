@@ -28,7 +28,7 @@
 
     <role-selection-modal
       v-if="selectedRow"
-      :email="selectedEmail"
+      :email="selectedRow.email"
       :initial-selection="selectedRow.roles"
       @ok="editRoles"
     />
@@ -61,11 +61,6 @@ export default {
           }
         }
       ]
-    }
-  },
-  computed: {
-    selectedEmail () {
-      return this.selectedRow && this.selectedRow.email
     }
   },
   methods: {

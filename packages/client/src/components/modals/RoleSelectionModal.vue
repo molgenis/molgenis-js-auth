@@ -36,12 +36,9 @@ export default {
     reset: function () {
       this.selection = this.initialSelection
     },
-    isPromotedToSuperUser () {
-      return this.superRoleNames.some(name => !this.initialSelection.includes(name) && this.selection.includes(name))
-    },
     onOk: function () {
       if (this.selectionChanged) {
-        if (this.isPromotedToSuperUser()) {
+        if (this.isPromotedToSuperUser) {
           this.$bvModal.msgBoxConfirm('Are you sure you want to make ' + this.email + ' a super user?', {
             centered: true,
             okVariant: 'danger'
@@ -57,12 +54,7 @@ export default {
       }
     },
     emitOk () {
-      if (this.selectionChanged) {
-        this.$emit('ok', this.selection.filter(Boolean))
-      }
-    },
-    selectionChanged () {
-      return this.selection !== this.initialSelection
+      this.$emit('ok', this.selection.filter(Boolean))
     }
   },
   computed: {
@@ -72,6 +64,12 @@ export default {
           return role.name
         }
       }).filter(Boolean)
+    },
+    selectionChanged () {
+      return this.selection !== this.initialSelection
+    },
+    isPromotedToSuperUser () {
+      return this.superRoleNames.some(name => !this.initialSelection.includes(name) && this.selection.includes(name))
     }
   },
   apollo: {
