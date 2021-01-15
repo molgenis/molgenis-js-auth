@@ -9,10 +9,11 @@ const app = express()
 app.use(morgan("common"))
 app.use(express.json())
 app.use(auth({
-  required: true,
+  required: app.get('env') !== 'development',
   authorizationParams: {
     response_type: 'code'
   },
+  idpLogout: true
 }))
 app.use('/user', (req, res) => {
   res.send(`hello ${req.openid.user.email}. You have roles ${req.openid.user.roles} on application ${req.openid.user.applicationId}`)
