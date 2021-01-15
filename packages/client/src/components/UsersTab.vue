@@ -38,8 +38,8 @@
 
 <script>
 import gql from 'graphql-tag'
-import RoleSelectionModal from './RoleSelectionModal'
-import RegisterUserModal from './RegisterUserModal.vue'
+import RoleSelectionModal from '@/components/modals/RoleSelectionModal'
+import RegisterUserModal from '@/components/modals/RegisterUserModal.vue'
 import { REGISTERED_USERS_QUERY } from '@/assets/queries.js'
 
 export default {

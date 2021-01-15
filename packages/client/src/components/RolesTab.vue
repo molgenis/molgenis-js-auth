@@ -36,7 +36,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import CreateRoleModal from './CreateRoleModal.vue'
+import CreateRoleModal from '@/components/modals/CreateRoleModal.vue'
 import { ROLES_QUERY, REGISTERED_USERS_QUERY } from '@/assets/queries.js'
 
 export default {
