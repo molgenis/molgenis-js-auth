@@ -54,7 +54,7 @@ export default {
       }
     },
     emitOk () {
-      this.$emit('ok', this.selection.filter(Boolean))
+      this.$emit('ok', this.selection)
     }
   },
   computed: {
@@ -63,7 +63,7 @@ export default {
         if (role.isSuperRole) {
           return role.name
         }
-      }).filter(Boolean)
+      })
     },
     selectionChanged () {
       return this.selection !== this.initialSelection

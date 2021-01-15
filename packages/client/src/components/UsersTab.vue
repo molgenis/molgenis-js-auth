@@ -9,37 +9,41 @@
       :fields="tableFields"
     >
       <template #cell(roles)="data">
-        <span
-          v-for="role in data.item.roles"
-          :key="role"
-          class="badges mr-1"
-        >
-          <b-badge v-if="isSuperRole(role)" variant="warning">
-            {{role}}
-          </b-badge>
-          <b-badge v-else variant="light">
-            {{role}}
-          </b-badge>
+        <span v-for="role in data.item.roles" :key="role" class="badges mr-1">
+          <b-tag
+            v-if="isSuperRole(role)"
+            variant="warning"
+            @remove="removeRole(data.item, role)"
+          >
+            {{ role }}
+          </b-tag>
+          <b-tag v-else variant="light" @remove="removeRole(data.item, role)">
+            {{ role }}
+          </b-tag>
         </span>
       </template>
     </b-table>
+
     <b-button-group>
       <b-button
         :disabled="!selectedRow"
         @click="confirmUnregisterUser"
         variant="primary"
-        ><b-icon-person-dash-fill /> Unregister User</b-button
       >
+        <b-icon-person-dash-fill /> Unregister User
+      </b-button>
       <b-button
         :disabled="!selectedRow"
         v-b-modal.modal-edit-roles
         variant="primary"
-        ><b-icon-person-lines-fill /> Edit Roles</b-button
       >
+        <b-icon-person-lines-fill /> Edit Roles
+      </b-button>
     </b-button-group>
-    <b-button class="ml-3" v-b-modal.modal-register-user variant="primary"
-      ><b-icon-person-plus-fill /> Register User</b-button
-    >
+
+    <b-button class="ml-3" v-b-modal.modal-register-user variant="primary">
+      <b-icon-person-plus-fill /> Register User
+    </b-button>
 
     <role-selection-modal
       v-if="selectedRow"
@@ -86,7 +90,16 @@ export default {
       const role = this.roles.find(role => role.name === roleName)
       return role && role.isSuperRole
     },
-    async editRoles (roles) {
+    removeRole (user, roleName) {
+      this.updateUserRoles(
+        user.id,
+        user.roles.filter(role => role !== roleName)
+      )
+    },
+    editRoles (roles) {
+      this.updateUserRoles(this.selectedRow.id, roles)
+    },
+    async updateUserRoles (userId, roles) {
       await this.$apollo.mutate({
         mutation: gql`
           mutation($userId: String!, $roles: [String]!) {
@@ -97,7 +110,7 @@ export default {
           }
         `,
         variables: {
-          userId: this.selectedRow.id,
+          userId,
           roles
         }
       })

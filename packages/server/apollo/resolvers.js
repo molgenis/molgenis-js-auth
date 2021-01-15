@@ -20,6 +20,7 @@ module.exports = {
       return (user.registrations||[])
         .filter((reg)=>reg.applicationId === applicationId)
         .flatMap(reg => reg.roles)
+        .filter(role => role != null)
     },
     registered: (user, _args, {applicationId}) => {
       return (user.registrations||[])

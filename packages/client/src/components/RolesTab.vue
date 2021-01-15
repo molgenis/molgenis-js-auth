@@ -12,36 +12,41 @@
         <span
           v-for="member in data.item.members"
           :key="member.id"
-          class="badges mr-1"
+          class="badges mr-1 mb-1"
         >
-          <b-badge variant="light">
+          <b-tag variant="light" @remove="removeMember(data.item, member.id)">
             {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
-          </b-badge>
+          </b-tag>
         </span>
       </template>
     </b-table>
+
     <b-button-group>
       <b-button
         :disabled="!selectedRow || superUserRoleSelected"
         @click="confirmDeleteRole"
         variant="primary"
-        ><b-icon-journal-minus /> Delete Role</b-button
       >
+        <b-icon-journal-minus /> Delete Role
+      </b-button>
       <b-button
         :disabled="!selectedRow"
         variant="primary"
         v-b-modal.modal-edit-members
-        ><b-icon-journal-text /> Edit Members</b-button
       >
+        <b-icon-journal-text /> Edit Members
+      </b-button>
     </b-button-group>
-    <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role
-      ><b-icon-journal-plus /> Create New Role</b-button
-    >
+
+    <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
+      <b-icon-journal-plus /> Create New Role
+    </b-button>
+
     <create-role-modal @ok="createRole" />
     <member-selection-modal
       v-if="selectedRow"
       :role="selectedRow.name"
-      :initial-selection="selectedRow.members.map(member => member.email)"
+      :initial-selection="selectedRow.members.map((member) => member.email)"
       @ok="editMembers"
     />
   </div>
@@ -133,22 +138,31 @@ export default {
         }
       })
     },
-    async editMembers (memberEmails) {
+    removeMember (role, memberId) {
+      this.updateRoleMembers(
+        role.name,
+        role.members.filter(member => member.id !== memberId).map(member => member.id)
+      )
+    },
+    editMembers (memberEmails) {
+      this.updateRoleMembers(
+        this.selectedRow.name,
+        memberEmails.map(email => this.registeredUsers.find(user => user.email === email).id)
+      )
+    },
+    async updateRoleMembers (roleName, userIds) {
       await this.$apollo.mutate({
         mutation: gql`
           mutation($roleName: String!, $userIds: [String]!) {
             updateRoleMembers(roleName: $roleName, userIds: $userIds) {
               id
-              firstName
-              lastName
-              email
               roles
             }
           }
         `,
         variables: {
-          roleName: this.selectedRow.name,
-          userIds: memberEmails.map(email => this.registeredUsers.find(user => user.email === email).id)
+          roleName,
+          userIds
         }
       })
     }
