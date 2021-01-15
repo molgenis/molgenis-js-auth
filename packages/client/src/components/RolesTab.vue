@@ -14,7 +14,7 @@
           :key="member.id"
           class="badges mr-1"
         >
-          <b-badge variant="primary">
+          <b-badge variant="light">
             {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
           </b-badge>
         </span>
@@ -172,9 +172,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.badges {
-  font-size: 20px;
-}
-</style>

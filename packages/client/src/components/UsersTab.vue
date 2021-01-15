@@ -7,7 +7,22 @@
       :items="registeredUsers"
       @row-selected="selectRow"
       :fields="tableFields"
-    ></b-table>
+    >
+      <template #cell(roles)="data">
+        <span
+          v-for="role in data.item.roles"
+          :key="role"
+          class="badges mr-1"
+        >
+          <b-badge v-if="isSuperRole(role)" variant="warning">
+            {{role}}
+          </b-badge>
+          <b-badge v-else variant="light">
+            {{role}}
+          </b-badge>
+        </span>
+      </template>
+    </b-table>
     <b-button-group>
       <b-button
         :disabled="!selectedRow"
@@ -40,7 +55,7 @@
 import gql from 'graphql-tag'
 import RoleSelectionModal from '@/components/modals/RoleSelectionModal'
 import RegisterUserModal from '@/components/modals/RegisterUserModal.vue'
-import { REGISTERED_USERS_QUERY } from '@/assets/queries.js'
+import { REGISTERED_USERS_QUERY, ROLES_QUERY } from '@/assets/queries.js'
 
 export default {
   components: {
@@ -66,6 +81,10 @@ export default {
   methods: {
     selectRow (row) {
       this.selectedRow = row[0]
+    },
+    isSuperRole (roleName) {
+      const role = this.roles.find(role => role.name === roleName)
+      return role && role.isSuperRole
     },
     async editRoles (roles) {
       await this.$apollo.mutate({
@@ -138,7 +157,8 @@ export default {
     }
   },
   apollo: {
-    registeredUsers: REGISTERED_USERS_QUERY
+    registeredUsers: REGISTERED_USERS_QUERY,
+    roles: ROLES_QUERY
   }
 }
 </script>
