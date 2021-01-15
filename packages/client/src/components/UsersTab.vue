@@ -7,22 +7,47 @@
       :items="registeredUsers"
       @row-selected="selectRow"
       :fields="tableFields"
-    ></b-table>
-    <b-button-group>
-      <b-button :disabled="!selectedRow" @click="confirmUnregisterUser"
-        >Unregister User</b-button
-      >
-      <b-button :disabled="!selectedRow" v-b-modal.modal-edit-roles
-        >Edit Roles</b-button
-      >
-    </b-button-group>
-    <b-button class="ml-3" v-b-modal.modal-register-user
-      >Register User</b-button
     >
+      <template #cell(roles)="data">
+        <span v-for="role in data.item.roles" :key="role" class="badges mr-1">
+          <b-tag
+            v-if="isSuperRole(role)"
+            variant="warning"
+            @remove="removeRole(data.item, role)"
+          >
+            {{ role }}
+          </b-tag>
+          <b-tag v-else variant="light" @remove="removeRole(data.item, role)">
+            {{ role }}
+          </b-tag>
+        </span>
+      </template>
+    </b-table>
+
+    <b-button-group>
+      <b-button
+        :disabled="!selectedRow"
+        @click="confirmUnregisterUser"
+        variant="primary"
+      >
+        <b-icon-person-dash-fill /> Unregister User
+      </b-button>
+      <b-button
+        :disabled="!selectedRow"
+        v-b-modal.modal-edit-roles
+        variant="primary"
+      >
+        <b-icon-person-lines-fill /> Edit Roles
+      </b-button>
+    </b-button-group>
+
+    <b-button class="ml-3" v-b-modal.modal-register-user variant="primary">
+      <b-icon-person-plus-fill /> Register User
+    </b-button>
 
     <role-selection-modal
       v-if="selectedRow"
-      :title="roleEditTitle"
+      :email="selectedRow.email"
       :initial-selection="selectedRow.roles"
       @ok="editRoles"
     />
@@ -32,20 +57,9 @@
 
 <script>
 import gql from 'graphql-tag'
-import RoleSelectionModal from './RoleSelectionModal'
-import RegisterUserModal from './RegisterUserModal.vue'
-
-const REGISTERED_USERS_QUERY = gql`
-      query {
-        registeredUsers {
-          id
-          email
-          firstName
-          lastName
-          roles
-        }
-      }
-    `
+import RoleSelectionModal from '@/components/modals/RoleSelectionModal'
+import RegisterUserModal from '@/components/modals/RegisterUserModal.vue'
+import { REGISTERED_USERS_QUERY, ROLES_QUERY } from '@/assets/queries.js'
 
 export default {
   components: {
@@ -68,19 +82,24 @@ export default {
       ]
     }
   },
-  computed: {
-    roleEditTitle () {
-      return (
-        this.selectedRow &&
-        `Edit Roles of ${this.selectedRow.firstName} ${this.selectedRow.lastName}`
-      )
-    }
-  },
   methods: {
     selectRow (row) {
       this.selectedRow = row[0]
     },
-    async editRoles (roles) {
+    isSuperRole (roleName) {
+      const role = this.roles.find(role => role.name === roleName)
+      return role && role.isSuperRole
+    },
+    removeRole (user, roleName) {
+      this.updateUserRoles(
+        user.id,
+        user.roles.filter(role => role !== roleName)
+      )
+    },
+    editRoles (roles) {
+      this.updateUserRoles(this.selectedRow.id, roles)
+    },
+    async updateUserRoles (userId, roles) {
       await this.$apollo.mutate({
         mutation: gql`
           mutation($userId: String!, $roles: [String]!) {
@@ -91,7 +110,7 @@ export default {
           }
         `,
         variables: {
-          userId: this.selectedRow.id,
+          userId,
           roles
         }
       })
@@ -151,7 +170,8 @@ export default {
     }
   },
   apollo: {
-    registeredUsers: REGISTERED_USERS_QUERY
+    registeredUsers: REGISTERED_USERS_QUERY,
+    roles: ROLES_QUERY
   }
 }
 </script>
