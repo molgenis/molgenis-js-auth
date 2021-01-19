@@ -1,46 +1,50 @@
 <template>
   <div>
-    <b-table
-      hover
-      selectable
-      select-mode="single"
-      :items="rolesWithMembers"
-      :fields="tableFields"
-      @row-selected="selectRow"
-    >
-      <template #cell(members)="data">
-        <span
-          v-for="member in data.item.members"
-          :key="member.id"
-          class="badges mr-1 mb-1"
+    <b-overlay :show="$apollo.loading" no-fade>
+      <b-table
+        hover
+        selectable
+        select-mode="single"
+        :items="rolesWithMembers"
+        :fields="tableFields"
+        @row-selected="selectRow"
+        show-empty
+        empty-text="No roles found..."
+      >
+        <template #cell(members)="data">
+          <span
+            v-for="member in data.item.members"
+            :key="member.id"
+            class="badges mr-1 mb-1"
+          >
+            <b-tag variant="light" @remove="removeMember(data.item, member.id)">
+              {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
+            </b-tag>
+          </span>
+        </template>
+      </b-table>
+
+      <b-button-group>
+        <b-button
+          :disabled="!selectedRow || superUserRoleSelected"
+          @click="confirmDeleteRole"
+          variant="primary"
         >
-          <b-tag variant="light" @remove="removeMember(data.item, member.id)">
-            {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
-          </b-tag>
-        </span>
-      </template>
-    </b-table>
+          <b-icon-journal-minus /> Delete Role
+        </b-button>
+        <b-button
+          :disabled="!selectedRow"
+          variant="primary"
+          v-b-modal.modal-edit-members
+        >
+          <b-icon-journal-text /> Edit Members
+        </b-button>
+      </b-button-group>
 
-    <b-button-group>
-      <b-button
-        :disabled="!selectedRow || superUserRoleSelected"
-        @click="confirmDeleteRole"
-        variant="primary"
-      >
-        <b-icon-journal-minus /> Delete Role
+      <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
+        <b-icon-journal-plus /> Create New Role
       </b-button>
-      <b-button
-        :disabled="!selectedRow"
-        variant="primary"
-        v-b-modal.modal-edit-members
-      >
-        <b-icon-journal-text /> Edit Members
-      </b-button>
-    </b-button-group>
-
-    <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
-      <b-icon-journal-plus /> Create New Role
-    </b-button>
+    </b-overlay>
 
     <create-role-modal @ok="createRole" />
     <member-selection-modal

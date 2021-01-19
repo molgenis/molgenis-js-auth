@@ -7,15 +7,17 @@
     @ok="onOk"
     @show="reset"
   >
-    <b-form-checkbox-group
-      v-if="roles"
-      stacked
-      name="role-selection"
-      :options="roles"
-      value-field="name"
-      text-field="name"
-      v-model="selection"
-    />
+    <b-overlay :show="$apollo.loading" no-fade>
+      <b-form-checkbox-group
+        v-if="roles"
+        stacked
+        name="role-selection"
+        :options="roles"
+        value-field="name"
+        text-field="name"
+        v-model="selection"
+      />
+    </b-overlay>
   </b-modal>
 </template>
 

@@ -7,15 +7,17 @@
     @ok="onOk"
     @show="reset"
   >
-    <b-form-checkbox-group
-      v-if="registeredUsers"
-      stacked
-      name="member-selection"
-      :options="registeredUsers"
-      value-field="email"
-      text-field="email"
-      v-model="selection"
-    />
+    <b-overlay :show="$apollo.loading" no-fade>
+      <b-form-checkbox-group
+        v-if="registeredUsers"
+        stacked
+        name="member-selection"
+        :options="registeredUsers"
+        value-field="email"
+        text-field="email"
+        v-model="selection"
+      />
+    </b-overlay>
   </b-modal>
 </template>
 

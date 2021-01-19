@@ -1,5 +1,7 @@
 <template>
+  <b-overlay :show="$apollo.loading" no-fade>
     <h1 v-if="application">{{application.name}}</h1>
+  </b-overlay>
 </template>
 
 <script>

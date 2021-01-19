@@ -1,49 +1,53 @@
 <template>
   <div>
-    <b-table
-      hover
-      selectable
-      select-mode="single"
-      :items="registeredUsers"
-      @row-selected="selectRow"
-      :fields="tableFields"
-    >
-      <template #cell(roles)="data">
-        <span v-for="role in data.item.roles" :key="role" class="badges mr-1">
-          <b-tag
-            v-if="isSuperRole(role)"
-            variant="warning"
-            @remove="removeRole(data.item, role)"
-          >
-            {{ role }}
-          </b-tag>
-          <b-tag v-else variant="light" @remove="removeRole(data.item, role)">
-            {{ role }}
-          </b-tag>
-        </span>
-      </template>
-    </b-table>
-
-    <b-button-group>
-      <b-button
-        :disabled="!selectedRow"
-        @click="confirmUnregisterUser"
-        variant="primary"
+    <b-overlay :show="$apollo.loading" no-fade>
+      <b-table
+        hover
+        selectable
+        select-mode="single"
+        :items="registeredUsers"
+        @row-selected="selectRow"
+        :fields="tableFields"
+        show-empty
+        empty-text="No users found..."
       >
-        <b-icon-person-dash-fill /> Unregister User
-      </b-button>
-      <b-button
-        :disabled="!selectedRow"
-        v-b-modal.modal-edit-roles
-        variant="primary"
-      >
-        <b-icon-person-lines-fill /> Edit Roles
-      </b-button>
-    </b-button-group>
+        <template #cell(roles)="data">
+          <span v-for="role in data.item.roles" :key="role" class="badges mr-1">
+            <b-tag
+              v-if="isSuperRole(role)"
+              variant="warning"
+              @remove="removeRole(data.item, role)"
+            >
+              {{ role }}
+            </b-tag>
+            <b-tag v-else variant="light" @remove="removeRole(data.item, role)">
+              {{ role }}
+            </b-tag>
+          </span>
+        </template>
+      </b-table>
 
-    <b-button class="ml-3" v-b-modal.modal-register-user variant="primary">
-      <b-icon-person-plus-fill /> Register User
-    </b-button>
+      <b-button-group>
+        <b-button
+          :disabled="!selectedRow"
+          @click="confirmUnregisterUser"
+          variant="primary"
+        >
+          <b-icon-person-dash-fill /> Unregister User
+        </b-button>
+        <b-button
+          :disabled="!selectedRow"
+          v-b-modal.modal-edit-roles
+          variant="primary"
+        >
+          <b-icon-person-lines-fill /> Edit Roles
+        </b-button>
+      </b-button-group>
+
+      <b-button class="ml-3" v-b-modal.modal-register-user variant="primary">
+        <b-icon-person-plus-fill /> Register User
+      </b-button>
+    </b-overlay>
 
     <role-selection-modal
       v-if="selectedRow"
