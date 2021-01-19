@@ -133,10 +133,10 @@ export default {
 .table-hover .table-row-disabled:hover {
   cursor: not-allowed !important;
   background: #ffffff;
-  color: #808080;
+  color: #b0b0b0;
 }
 .table .table-row-disabled {
-  color: #808080;
+  color: #b0b0b0;
 }
 .personRegistered {
   vertical-align: center;
