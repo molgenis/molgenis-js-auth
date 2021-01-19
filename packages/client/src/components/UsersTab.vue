@@ -11,7 +11,7 @@
         show-empty
         empty-text="No users found..."
       >
-        <template #cell(roles)="data">
+        <template v-if="roles" #cell(roles)="data">
           <span v-for="role in data.item.roles" :key="role" class="badges mr-1">
             <b-tag
               v-if="isSuperRole(role)"
@@ -81,7 +81,8 @@ export default {
           key: 'roles',
           formatter: value => {
             return value.join(', ')
-          }
+          },
+          thClass: 'fixedWidth'
         }
       ]
     }
@@ -179,3 +180,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.fixedWidth{
+  color: red
+}
+</style>
