@@ -82,7 +82,7 @@ export default {
           formatter: value => {
             return value.join(', ')
           },
-          thClass: 'fixedWidth'
+          thClass: 'roles-column'
         }
       ]
     }
@@ -181,8 +181,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.fixedWidth{
-  color: red
+<style>
+.roles-column{
+  width: 50%
 }
 </style>

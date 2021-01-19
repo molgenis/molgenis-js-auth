@@ -72,7 +72,10 @@ export default {
       selectedRow: null,
       tableFields: [
         'name',
-        'members'
+        {
+          key: 'members',
+          thClass: 'members-column'
+        }
       ]
     }
   },
@@ -190,3 +193,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.members-column{
+  width: 75%
+}
+</style>
