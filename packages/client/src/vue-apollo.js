@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client'
+import { EventBus } from '@/assets/eventbus'
 
 // Install the vue plugin
 Vue.use(VueApollo)
@@ -68,8 +69,7 @@ export function createProvider (options = {}) {
       }
     },
     errorHandler (error) {
-      // eslint-disable-next-line no-console
-      console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
+      EventBus.$emit('error', error.message)
     }
   })
 

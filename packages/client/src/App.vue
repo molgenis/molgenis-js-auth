@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="container">
     <application-title class="mb-4" />
+    <message-container />
     <b-tabs content-class="mt-3">
       <b-tab active>
         <template v-slot:title> <b-icon-people-fill /> Users </template>
@@ -18,13 +19,15 @@
 import UsersTab from './components/UsersTab'
 import ApplicationTitle from './components/ApplicationTitle.vue'
 import RolesTab from './components/RolesTab.vue'
+import MessageContainer from './components/MessageContainer.vue'
 
 export default {
   name: 'app',
   components: {
     ApplicationTitle,
     UsersTab,
-    RolesTab
+    RolesTab,
+    MessageContainer
   }
 }
 </script>

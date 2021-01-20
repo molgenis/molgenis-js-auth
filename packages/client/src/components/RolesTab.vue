@@ -61,6 +61,7 @@ import gql from 'graphql-tag'
 import CreateRoleModal from '@/components/modals/CreateRoleModal.vue'
 import MemberSelectionModal from '@/components/modals/MemberSelectionModal.vue'
 import { ROLES_QUERY, REGISTERED_USERS_QUERY } from '@/assets/queries.js'
+import { EventBus } from '@/assets/eventbus'
 
 export default {
   components: {
@@ -143,6 +144,8 @@ export default {
           const roles = store.readQuery({ query: ROLES_QUERY }).roles
           store.writeQuery({ query: ROLES_QUERY, data: { roles: [...roles, createRole] } })
         }
+      }).catch((error) => {
+        EventBus.$emit('error', error.message)
       })
     },
     removeMember (role, memberId) {
