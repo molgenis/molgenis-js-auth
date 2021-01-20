@@ -23,11 +23,11 @@
       </b-navbar>
       <message-container />
       <b-tabs content-class="mt-3">
-        <b-tab active>
+        <b-tab active class="pt-2">
           <template v-slot:title> <b-icon-people-fill /> Users </template>
           <users-tab />
         </b-tab>
-        <b-tab title="Roles">
+        <b-tab title="Roles" class="pt-2">
           <template v-slot:title> <b-icon-journals /> Roles </template>
           <roles-tab />
         </b-tab>
