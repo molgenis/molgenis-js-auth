@@ -7,6 +7,7 @@ import {
   BIconSearch,
   BIconCheck,
   BIconX,
+  BIconPersonFill,
   BIconPersonPlusFill,
   BIconPersonDashFill,
   BIconPersonLinesFill,
@@ -26,6 +27,7 @@ Vue.component('BIcon', BIcon)
 Vue.component('BIconSearch', BIconSearch)
 Vue.component('BIconCheck', BIconCheck)
 Vue.component('BIconX', BIconX)
+Vue.component('BIconPersonFill', BIconPersonFill)
 Vue.component('BIconPersonPlusFill', BIconPersonPlusFill)
 Vue.component('BIconPersonDashFill', BIconPersonDashFill)
 Vue.component('BIconPersonLinesFill', BIconPersonLinesFill)
