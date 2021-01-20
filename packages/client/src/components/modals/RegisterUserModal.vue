@@ -20,25 +20,29 @@
         placeholder="Search users..."
       ></b-form-input>
     </b-input-group>
-    <b-table
-      ref="table"
-      v-if="searchQuery"
-      hover
-      :items="rows"
-      :fields="tableFields"
-      selectable
-      select-mode="single"
-      @row-selected="selectRow"
-    >
-      <template #cell(registered)="data">
-        <span v-if="!data.item.registered">
-          <b-icon-x font-scale="1.8" />
-        </span>
-        <span v-if="data.item.registered">
-          <b-icon-check font-scale="1.8" />
-        </span>
-      </template>
-    </b-table>
+
+    <b-overlay :show="$apollo.loading" no-fade>
+      <b-table
+        ref="table"
+        :items="rows"
+        :fields="tableFields"
+        hover
+        selectable
+        select-mode="single"
+        @row-selected="selectRow"
+        show-empty
+        empty-text="No users found..."
+      >
+        <template #cell(registered)="data">
+          <span v-if="!data.item.registered">
+            <b-icon-x font-scale="1.8" />
+          </span>
+          <span v-if="data.item.registered">
+            <b-icon-check font-scale="1.8" />
+          </span>
+        </template>
+      </b-table>
+    </b-overlay>
   </b-modal>
 </template>
 
@@ -133,10 +137,10 @@ export default {
 .table-hover .table-row-disabled:hover {
   cursor: not-allowed !important;
   background: #ffffff;
-  color: #808080;
+  color: #b0b0b0;
 }
 .table .table-row-disabled {
-  color: #808080;
+  color: #b0b0b0;
 }
 .personRegistered {
   vertical-align: center;

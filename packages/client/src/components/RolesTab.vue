@@ -1,46 +1,50 @@
 <template>
   <div>
-    <b-table
-      hover
-      selectable
-      select-mode="single"
-      :items="rolesWithMembers"
-      :fields="tableFields"
-      @row-selected="selectRow"
-    >
-      <template #cell(members)="data">
-        <span
-          v-for="member in data.item.members"
-          :key="member.id"
-          class="badges mr-1 mb-1"
+    <b-overlay :show="$apollo.loading" no-fade>
+      <b-table
+        hover
+        selectable
+        select-mode="single"
+        :items="rolesWithMembers"
+        :fields="tableFields"
+        @row-selected="selectRow"
+        show-empty
+        empty-text="No roles found..."
+      >
+        <template #cell(members)="data">
+          <span
+            v-for="member in data.item.members"
+            :key="member.id"
+            class="badges mr-1 mb-1"
+          >
+            <b-tag variant="light" @remove="removeMember(data.item, member.id)">
+              {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
+            </b-tag>
+          </span>
+        </template>
+      </b-table>
+
+      <b-button-group>
+        <b-button
+          :disabled="!selectedRow || superUserRoleSelected"
+          @click="confirmDeleteRole"
+          variant="primary"
         >
-          <b-tag variant="light" @remove="removeMember(data.item, member.id)">
-            {{ member.firstName }} {{ member.lastName }} ({{ member.email }})
-          </b-tag>
-        </span>
-      </template>
-    </b-table>
+          <b-icon-journal-minus /> Delete Role
+        </b-button>
+        <b-button
+          :disabled="!selectedRow"
+          variant="primary"
+          v-b-modal.modal-edit-members
+        >
+          <b-icon-journal-text /> Edit Members
+        </b-button>
+      </b-button-group>
 
-    <b-button-group>
-      <b-button
-        :disabled="!selectedRow || superUserRoleSelected"
-        @click="confirmDeleteRole"
-        variant="primary"
-      >
-        <b-icon-journal-minus /> Delete Role
+      <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
+        <b-icon-journal-plus /> Create New Role
       </b-button>
-      <b-button
-        :disabled="!selectedRow"
-        variant="primary"
-        v-b-modal.modal-edit-members
-      >
-        <b-icon-journal-text /> Edit Members
-      </b-button>
-    </b-button-group>
-
-    <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
-      <b-icon-journal-plus /> Create New Role
-    </b-button>
+    </b-overlay>
 
     <create-role-modal @ok="createRole" />
     <member-selection-modal
@@ -57,6 +61,7 @@ import gql from 'graphql-tag'
 import CreateRoleModal from '@/components/modals/CreateRoleModal.vue'
 import MemberSelectionModal from '@/components/modals/MemberSelectionModal.vue'
 import { ROLES_QUERY, REGISTERED_USERS_QUERY } from '@/assets/queries.js'
+import { EventBus } from '@/assets/eventbus'
 
 export default {
   components: {
@@ -68,7 +73,10 @@ export default {
       selectedRow: null,
       tableFields: [
         'name',
-        'members'
+        {
+          key: 'members',
+          thClass: 'members-column'
+        }
       ]
     }
   },
@@ -136,6 +144,8 @@ export default {
           const roles = store.readQuery({ query: ROLES_QUERY }).roles
           store.writeQuery({ query: ROLES_QUERY, data: { roles: [...roles, createRole] } })
         }
+      }).catch((error) => {
+        EventBus.$emit('error', error.message)
       })
     },
     removeMember (role, memberId) {
@@ -186,3 +196,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.members-column{
+  width: 75%
+}
+</style>
