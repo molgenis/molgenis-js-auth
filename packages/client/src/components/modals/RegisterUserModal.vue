@@ -84,7 +84,6 @@ export default {
     reset () {
       this.searchQuery = ''
       this.selectedUserId = null
-      this.users = null
     },
     onOk () {
       this.$emit('ok', this.selectedUserId)
