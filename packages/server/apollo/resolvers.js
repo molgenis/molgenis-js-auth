@@ -1,5 +1,7 @@
 module.exports = {
   Query: {
+    me: async (_source, _args, { dataSources, user }) => 
+      user && dataSources.fusionAPI.getUser(user.sub),
     application: async (_source, _args, { dataSources, applicationId }) => 
       dataSources.fusionAPI.getApplication(applicationId),
     registeredUsers: async (_source, _args, { dataSources, applicationId }) => {

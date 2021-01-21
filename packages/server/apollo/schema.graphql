@@ -21,6 +21,7 @@ type User {
 }
 
 type Query {
+  me: User
   application: Application
   registeredUsers: [User]
   users(searchQuery: String): [User]
