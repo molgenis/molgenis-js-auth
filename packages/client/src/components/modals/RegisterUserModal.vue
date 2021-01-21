@@ -90,16 +90,16 @@ export default {
       this.$emit('ok', this.selectedUserId)
     },
     selectRow (rows) {
-      var selected = []
-      rows.forEach((user, index) => {
-        if (user.registered) {
-          this.$refs.table.unselectRow(index)
-        } else {
-          selected.push(user)
-        }
-      })
-      if (selected.length > 0) {
-        this.selectedUserId = selected[0]['id']
+      let selected = rows[0]
+      if (selected && selected.registered) {
+        this.$refs.table.clearSelected()
+        selected = null
+      }
+
+      if (selected) {
+        this.selectedUserId = selected.id
+      } else {
+        this.selectedUserId = null
       }
     },
     setRowVariant (item) {
