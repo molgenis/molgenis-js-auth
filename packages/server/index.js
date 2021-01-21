@@ -9,7 +9,7 @@ const app = express()
 app.use(morgan("common"))
 app.use(express.json())
 app.use(auth({
-  required: true,
+  required: false,
   authorizationParams: {
     response_type: 'code'
   },

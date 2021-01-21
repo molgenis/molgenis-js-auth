@@ -9,6 +9,7 @@ const isSu = rule({ cache: 'contextual' })(
 module.exports = shield({
   Query: {
     "me": allow,
+    "application": allow,
     "*": isSu
   },
   Mutation: {
