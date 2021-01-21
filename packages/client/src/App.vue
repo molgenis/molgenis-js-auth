@@ -76,8 +76,4 @@ export default {
 .badges {
   font-size: 20px;
 }
-
-.container {
-  margin-top: 0px;
-}
 </style>
