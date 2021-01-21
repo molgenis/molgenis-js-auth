@@ -8,13 +8,12 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-text v-if="username" class="mr-4">
-              <b-icon-person-fill /> {{ username }}
+              <b-icon-person-fill /> {{ me && me.email }}
             </b-nav-text>
             <b-button
-              size="sm"
+              size="m"
               variant="primary"
-              class="my-2 my-sm-0"
-              @click="logout"
+              href="/logout"
             >
               Log out
             </b-button>
@@ -54,11 +53,6 @@ export default {
       username: ''
     }
   },
-  methods: {
-    logout () {
-      // TODO user /logout endpoint
-    }
-  },
   created () {
     // TODO fetch username from /user endpoint
     this.username = 'Bofke'
@@ -67,6 +61,12 @@ export default {
     application: gql`query {
       application {
         name
+      }
+    }`,
+    me: gql`{
+      me {
+        email
+        roles
       }
     }`
   }
