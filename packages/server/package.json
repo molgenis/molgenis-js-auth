@@ -1,12 +1,12 @@
 {
-  "name": "cohort-permissions",
+  "name": "armadillo-auth-server",
   "version": "0.1.0",
   "private": true,
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
-    "dev": "nodemon index.js"
+    "start": "NODE_ENV=production node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "MOLGENIS",
@@ -14,7 +14,7 @@
   "dependencies": {
     "apollo-datasource-rest": "^0.9.3",
     "apollo-server-express": "^2.17.0",
-    "armadillo-js-permissions": "^0.1.0",
+    "armadillo-auth-ui": "^0.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express-openid-connect": "^1.0.2",
