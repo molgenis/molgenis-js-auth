@@ -16,7 +16,7 @@ app.use(auth({
   idpLogout: true
 }))
 
-const buildPath = path.resolve(__dirname, 'node_modules/armadillo-js-permissions/dist')
+const buildPath = path.resolve(__dirname, '../node_modules/armadillo-auth-ui/dist')
 app.use(express.static(buildPath))
 
 apollo.applyMiddleware({ app, cors: {credentials: true, origin: true} })
