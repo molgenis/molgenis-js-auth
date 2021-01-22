@@ -1,32 +1,6 @@
 <template>
   <div>
     <b-overlay :show="$apollo.loading" no-fade>
-      <b-table
-        hover
-        selectable
-        select-mode="single"
-        :items="registeredUsers"
-        @row-selected="selectRow"
-        :fields="tableFields"
-        show-empty
-        empty-text="No users found..."
-      >
-        <template v-if="roles" #cell(roles)="data">
-          <span v-for="role in data.item.roles" :key="role" class="badges mr-1">
-            <b-tag
-              v-if="isSuperRole(role)"
-              variant="warning"
-              @remove="removeRole(data.item, role)"
-            >
-              {{ role }}
-            </b-tag>
-            <b-tag v-else variant="light" @remove="removeRole(data.item, role)">
-              {{ role }}
-            </b-tag>
-          </span>
-        </template>
-      </b-table>
-
       <b-button-group>
         <b-button
           :disabled="!selectedRow"
@@ -47,6 +21,33 @@
       <b-button class="ml-3" v-b-modal.modal-register-user variant="primary">
         <b-icon-person-plus-fill /> Register User
       </b-button>
+
+      <b-table
+        hover
+        selectable
+        select-mode="single"
+        :items="registeredUsers"
+        @row-selected="selectRow"
+        :fields="tableFields"
+        show-empty
+        empty-text="No users found..."
+        class="mt-4"
+      >
+        <template v-if="roles" #cell(roles)="data">
+          <span v-for="role in data.item.roles" :key="role" class="badges mr-1">
+            <b-tag
+              v-if="isSuperRole(role)"
+              variant="warning"
+              @remove="removeRole(data.item, role)"
+            >
+              {{ role }}
+            </b-tag>
+            <b-tag v-else variant="light" @remove="removeRole(data.item, role)">
+              {{ role }}
+            </b-tag>
+          </span>
+        </template>
+      </b-table>
     </b-overlay>
 
     <role-selection-modal
@@ -182,7 +183,7 @@ export default {
 </script>
 
 <style>
-.roles-column{
-  width: 50%
+.roles-column {
+  width: 50%;
 }
 </style>

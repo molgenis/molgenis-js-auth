@@ -9,15 +9,12 @@ const app = express()
 app.use(morgan("common"))
 app.use(express.json())
 app.use(auth({
-  required: app.get('env') !== 'development',
+  required: false,
   authorizationParams: {
     response_type: 'code'
   },
   idpLogout: true
 }))
-app.use('/user', (req, res) => {
-  res.send(`hello ${req.openid.user.email}. You have roles ${req.openid.user.roles} on application ${req.openid.user.applicationId}`)
-})
 
 const buildPath = path.resolve(__dirname, 'node_modules/armadillo-js-permissions/dist')
 app.use(express.static(buildPath))

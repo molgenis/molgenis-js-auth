@@ -1,32 +1,42 @@
 <template>
-  <div id="app" class="container">
-    <div v-if="me && me.roles.includes('SU')">
-      {{ me }}
-      <application-title class="mb-4" />
-      <message-container />
-      <b-tabs content-class="mt-3">
-        <b-tab active>
-          <template v-slot:title> <b-icon-people-fill /> Users </template>
-          <users-tab />
-        </b-tab>
-        <b-tab title="Roles">
-          <template v-slot:title> <b-icon-journals /> Roles </template>
-          <roles-tab />
-        </b-tab>
-      </b-tabs>
+  <div>
+    <div id="app" class="container mt-1">
+      <b-navbar type="dark" variant="dark" class="mb-5">
+        <b-navbar-brand v-if="application">
+          {{ application.name }}
+        </b-navbar-brand>
+        <b-nav-text>Permissions</b-nav-text>
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav class="ml-auto">
+            <b-nav-text v-if="me" class="mr-4">
+              <b-icon-person-fill /> {{ me.email }}
+            </b-nav-text>
+            <b-button v-if="me" variant="primary" href="/logout">
+              Log out
+            </b-button>
+            <b-button v-else variant="primary" href="/login"> Log in </b-button>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+      <div v-if="me">
+        <message-container />
+        <b-tabs content-class="mt-3">
+          <b-tab active class="pt-2">
+            <template v-slot:title> <b-icon-people-fill /> Users </template>
+            <users-tab />
+          </b-tab>
+          <b-tab title="Roles" class="pt-2">
+            <template v-slot:title> <b-icon-journals /> Roles </template>
+            <roles-tab />
+          </b-tab>
+        </b-tabs>
+      </div>
     </div>
-    <div v-else-if="me">
-      Authenticated, not SU
-      {{me}}
-    </div>
-    <div v-else>
-      Not authenticated
-    </div>
+  </div>
 </template>
 
 <script>
 import UsersTab from './components/UsersTab'
-import ApplicationTitle from './components/ApplicationTitle.vue'
 import RolesTab from './components/RolesTab.vue'
 import MessageContainer from './components/MessageContainer.vue'
 import gql from 'graphql-tag'
@@ -34,12 +44,16 @@ import gql from 'graphql-tag'
 export default {
   name: 'app',
   components: {
-    ApplicationTitle,
     UsersTab,
     RolesTab,
     MessageContainer
   },
   apollo: {
+    application: gql`query {
+      application {
+        name
+      }
+    }`,
     me: gql`{
       me {
         email

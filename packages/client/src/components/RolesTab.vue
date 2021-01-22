@@ -1,5 +1,26 @@
 <template>
   <div>
+    <b-button-group>
+      <b-button
+        :disabled="!selectedRow || superUserRoleSelected"
+        @click="confirmDeleteRole"
+        variant="primary"
+      >
+        <b-icon-journal-minus /> Delete Role
+      </b-button>
+      <b-button
+        :disabled="!selectedRow"
+        variant="primary"
+        v-b-modal.modal-edit-members
+      >
+        <b-icon-journal-text /> Edit Members
+      </b-button>
+    </b-button-group>
+
+    <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
+      <b-icon-journal-plus /> Create New Role
+    </b-button>
+
     <b-overlay :show="$apollo.loading" no-fade>
       <b-table
         hover
@@ -10,6 +31,7 @@
         @row-selected="selectRow"
         show-empty
         empty-text="No roles found..."
+        class="mt-4"
       >
         <template #cell(members)="data">
           <span
@@ -23,27 +45,6 @@
           </span>
         </template>
       </b-table>
-
-      <b-button-group>
-        <b-button
-          :disabled="!selectedRow || superUserRoleSelected"
-          @click="confirmDeleteRole"
-          variant="primary"
-        >
-          <b-icon-journal-minus /> Delete Role
-        </b-button>
-        <b-button
-          :disabled="!selectedRow"
-          variant="primary"
-          v-b-modal.modal-edit-members
-        >
-          <b-icon-journal-text /> Edit Members
-        </b-button>
-      </b-button-group>
-
-      <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
-        <b-icon-journal-plus /> Create New Role
-      </b-button>
     </b-overlay>
 
     <create-role-modal @ok="createRole" />
@@ -198,7 +199,7 @@ export default {
 </script>
 
 <style>
-.members-column{
-  width: 75%
+.members-column {
+  width: 75%;
 }
 </style>
