@@ -141,6 +141,7 @@ export default {
             email
             firstName
             lastName
+            registered
             roles
           }
         }`,
@@ -159,6 +160,7 @@ export default {
           mutation($userId: String!) {
             unregister(userId: $userId) {
               id
+              registered
             }
           }
         `,

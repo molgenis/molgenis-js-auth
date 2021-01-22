@@ -24,7 +24,7 @@ export default {
   methods: {
     showErrorMessage (errorMessage) {
       this.errorMessage = errorMessage
-      this.show = true
+      this.showError = true
     }
   },
   created () {
