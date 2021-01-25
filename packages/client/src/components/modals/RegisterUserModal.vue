@@ -7,7 +7,7 @@
     size="lg"
     title="Register User"
     @ok="onOk"
-    @show="reset"
+    @shown="reset"
     :ok-disabled="!selectedUserId"
   >
     <b-input-group>
@@ -15,6 +15,7 @@
         <b-icon-search />
       </b-input-group-prepend>
       <b-form-input
+        ref="searchField"
         type="search"
         v-model="searchQuery"
         placeholder="Search users..."
@@ -84,6 +85,7 @@ export default {
     reset () {
       this.searchQuery = ''
       this.selectedUserId = null
+      this.$refs.searchField.focus()
     },
     onOk () {
       this.$emit('ok', this.selectedUserId)
