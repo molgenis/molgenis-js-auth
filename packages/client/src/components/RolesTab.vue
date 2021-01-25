@@ -59,6 +59,7 @@
     <member-selection-modal
       v-if="selectedRow"
       :role="selectedRow.name"
+      :isSuperRole="selectedRow.isSuperRole"
       :initial-selection="selectedRow.members.map((member) => member.email)"
       @ok="editMembers"
     />
