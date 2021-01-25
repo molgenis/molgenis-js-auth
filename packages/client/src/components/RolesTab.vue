@@ -145,8 +145,8 @@ export default {
           const roles = store.readQuery({ query: ROLES_QUERY }).roles
           store.writeQuery({ query: ROLES_QUERY, data: { roles: [...roles, createRole] } })
         }
-      }).catch(() => {
-        EventBus.$emit('error', 'Something went wrong while adding role ' + roleName)
+      }).catch((error) => {
+        EventBus.$emit('error', 'Something went wrong while adding role ' + roleName, error)
       })
     },
     removeMember (role, memberId) {
