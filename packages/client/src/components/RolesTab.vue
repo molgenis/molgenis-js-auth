@@ -33,6 +33,14 @@
         empty-text="No roles found..."
         class="mt-4"
       >
+        <template #cell(isSuperRole)="data">
+          <span v-if="!data.item.isSuperRole">
+            <b-icon-x font-scale="1.8" />
+          </span>
+          <span v-if="data.item.isSuperRole">
+            <b-icon-check font-scale="1.8" />
+          </span>
+        </template>
         <template #cell(members)="data">
           <span
             v-for="member in data.item.members"
@@ -74,6 +82,10 @@ export default {
       selectedRow: null,
       tableFields: [
         'name',
+        {
+          key: 'isSuperRole',
+          label: 'Super Role'
+        },
         {
           key: 'members',
           thClass: 'members-column'
@@ -200,6 +212,6 @@ export default {
 
 <style>
 .members-column {
-  width: 75%;
+  width: 65%;
 }
 </style>
