@@ -43,8 +43,8 @@ pipeline {
                 container('node') {
                     sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                     sh "npm install"
-                    sh "npx lerna bootstrap --since origin/main"
-                    sh "npx lerna run unit --since origin/main"
+                    sh "npx lerna bootstrap"
+                    sh "npx lerna run unit"
                 }
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
@@ -69,7 +69,7 @@ pipeline {
             }
             steps {
                 container('node') {
-                    sh "npx lerna run build --since origin/main"
+                    sh "npx lerna run build"
                 }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE} --destination ${LOCAL_REPOSITORY_AUTH}:${TAG}"
@@ -108,7 +108,7 @@ pipeline {
             }
             steps {
                 container('node') {
-                    sh "npx lerna run build --since origin/main"
+                    sh "npx lerna run build"
                 }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE} --destination ${LOCAL_REPOSITORY_AUTH}:${TAG}"
