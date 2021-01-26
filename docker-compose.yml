@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  server:
+    build: .
+    environment:
+      - FUSION_API_TOKEN='hUYFOGk8ZRHPjfhLQROZr0OfT6MIOApP'
+      - SERVER_PORT=4000
+      - REDIRECT_URI=http://localhost:4000/oauth-callback
+      - ISSUER_BASE_URL=https://auth.molgenis.org/
+      - CLIENT_ID=b396233b-cdb2-449e-ac5c-a0d28b38f791
+      - CLIENT_SECRET=nRO_t1_cIpdzRzr-cWBeZg4ckBsMHmX2MlA9SaSg4P8
+      - BASE_URL=http://localhost:4000
+      - APP_SESSION_SECRET=ewhtrenbfgsbsdf
+    ports:
+      - 4000:4000
