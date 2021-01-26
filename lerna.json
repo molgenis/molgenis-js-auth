@@ -4,5 +4,10 @@
   ],
   "version": "independent",
   "yes": true,
-  "workspaces": true
+  "workspaces": true,
+  "command": {
+    "version": {
+      "conventionalCommits": true
+    }
+  }
 }
