@@ -3,5 +3,6 @@
     "packages/*"
   ],
   "version": "independent",
-  "yes": true
+  "yes": true,
+  "workspaces": true
 }
