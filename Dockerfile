@@ -9,4 +9,6 @@ RUN mkdir -p /server/node_modules/armadillo-auth-ui/dist
 COPY packages/client/dist /server/node_modules/armadillo-auth-ui/dist
 COPY packages/server/src/ /server/src
 
-CMD ["node", "src/index.js", "NODE_ENV=production"]
+ENV NODE_ENV production
+
+CMD ["node", "src/index.js"]
