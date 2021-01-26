@@ -25,6 +25,7 @@ pipeline {
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
                         env.DOCKERHUB_AUTH = sh(script: 'vault read -field=value secret/gcc/token/dockerhub', returnStdout: true)
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
+                        env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
                     }
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
@@ -43,8 +44,8 @@ pipeline {
                 container('node') {
                     sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                     sh "npm install"
-                    sh "npx lerna bootstrap --since origin/main"
-                    sh "npx lerna run unit --since origin/main"
+                    sh "npx lerna bootstrap"
+                    sh "npx lerna run unit"
                 }
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
@@ -69,7 +70,7 @@ pipeline {
             }
             steps {
                 container('node') {
-                    sh "npx lerna run build --since origin/main"
+                    sh "npx lerna run build"
                 }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE} --destination ${LOCAL_REPOSITORY_AUTH}:${TAG}"
@@ -108,7 +109,7 @@ pipeline {
             }
             steps {
                 container('node') {
-                    sh "npx lerna run build --since origin/main"
+                    sh "npx lerna run build"
                 }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE} --destination ${LOCAL_REPOSITORY_AUTH}:${TAG}"
