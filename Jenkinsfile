@@ -139,6 +139,9 @@ pipeline {
                     }
                 }
                 stage('Release docker image: [ main ]') {
+                    environment {
+                        TAG = sh(returnStdout: true, script: "grep \'version\' package.json | cut -d \'\"\' -f4 | tr \'\n\' \'\0\'")
+                    }
                     steps {
                         container (name: 'kaniko', shell: '/busybox/sh') {
                             sh "#!/busybox/sh\necho '{\"auths\": {\"https://index.docker.io/v1/\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
