@@ -1,7 +1,5 @@
 type Application {
-  id: String!
   name: String!
-  roles: [Role]
 }
 
 type Role {
