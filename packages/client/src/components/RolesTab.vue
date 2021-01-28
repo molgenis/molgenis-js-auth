@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-overlay :show="$apollo.loading" no-fade>
+    <b-overlay :show="$apollo.loading" no-fade data-testid="loading-roles-overlay">
       <b-button-group>
         <b-button
           :disabled="!selectedRow || superUserRoleSelected"
@@ -177,7 +177,7 @@ export default {
     async updateRoleMembers (roleName, userIds) {
       await this.$apollo.mutate({
         mutation: gql`
-          mutation($roleName: String!, $userIds: [String]!) {
+          mutation UpdateRoleMembers ($roleName: String!, $userIds: [String]!) {
             updateRoleMembers(roleName: $roleName, userIds: $userIds) {
               id
               roles
