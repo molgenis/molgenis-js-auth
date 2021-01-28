@@ -1,6 +1,6 @@
 {
   "name": "armadillo-auth-server",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "description": "",
   "main": "src/index.js",
@@ -15,7 +15,7 @@
   "dependencies": {
     "apollo-datasource-rest": "^0.9.3",
     "apollo-server-express": "^2.17.0",
-    "armadillo-auth-ui": "^0.2.0",
+    "armadillo-auth-ui": "^0.2.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express-openid-connect": "^1.0.2",
