@@ -4,7 +4,7 @@
     centered
     lazy
     :title="'Edit members of ' + role"
-    @ok="onOk"
+    @ok="confirmOk"
     @show="reset"
   >
     <b-overlay :show="$apollo.loading" no-fade>
@@ -31,6 +31,7 @@ export default {
     }
   },
   props: {
+    isSuperRole: Boolean,
     role: String,
     initialSelection: Array
   },
@@ -38,15 +39,33 @@ export default {
     reset: function () {
       this.selection = this.initialSelection
     },
-    onOk: function () {
+    confirmOk: function () {
       if (this.selectionChanged) {
-        this.$emit('ok', this.selection.filter(Boolean))
+        if (this.isSuperRole && this.isPromotedToSuperUser) {
+          this.$bvModal.msgBoxConfirm('You are promoting one or more users to super user. Are you sure?', {
+            centered: true,
+            okVariant: 'danger'
+          })
+            .then((ok) => {
+              if (ok) {
+                this.emitOk()
+              }
+            })
+        } else {
+          this.emitOk()
+        }
       }
+    },
+    emitOk () {
+      this.$emit('ok', this.selection)
     }
   },
   computed: {
     selectionChanged () {
       return this.selection !== this.initialSelection
+    },
+    isPromotedToSuperUser () {
+      return this.registeredUsers.some(user => !this.initialSelection.includes(user.email) && this.selection.includes(user.email))
     }
   },
   apollo: {

@@ -1,27 +1,27 @@
 <template>
   <div>
-    <b-button-group>
-      <b-button
-        :disabled="!selectedRow || superUserRoleSelected"
-        @click="confirmDeleteRole"
-        variant="primary"
-      >
-        <b-icon-journal-minus /> Delete Role
-      </b-button>
-      <b-button
-        :disabled="!selectedRow"
-        variant="primary"
-        v-b-modal.modal-edit-members
-      >
-        <b-icon-journal-text /> Edit Members
-      </b-button>
-    </b-button-group>
-
-    <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
-      <b-icon-journal-plus /> Create New Role
-    </b-button>
-
     <b-overlay :show="$apollo.loading" no-fade>
+      <b-button-group>
+        <b-button
+          :disabled="!selectedRow || superUserRoleSelected"
+          @click="confirmDeleteRole"
+          variant="primary"
+        >
+          <b-icon-journal-minus /> Delete Role
+        </b-button>
+        <b-button
+          :disabled="!selectedRow"
+          variant="primary"
+          v-b-modal.modal-edit-members
+        >
+          <b-icon-journal-text /> Edit Members
+        </b-button>
+      </b-button-group>
+
+      <b-button class="ml-3" variant="primary" v-b-modal.modal-create-role>
+        <b-icon-journal-plus /> Create New Role
+      </b-button>
+
       <b-table
         hover
         selectable
@@ -33,6 +33,14 @@
         empty-text="No roles found..."
         class="mt-4"
       >
+        <template #cell(isSuperRole)="data">
+          <span v-if="!data.item.isSuperRole">
+            <b-icon-x font-scale="1.8" />
+          </span>
+          <span v-if="data.item.isSuperRole">
+            <b-icon-check font-scale="1.8" />
+          </span>
+        </template>
         <template #cell(members)="data">
           <span
             v-for="member in data.item.members"
@@ -51,6 +59,7 @@
     <member-selection-modal
       v-if="selectedRow"
       :role="selectedRow.name"
+      :isSuperRole="selectedRow.isSuperRole"
       :initial-selection="selectedRow.members.map((member) => member.email)"
       @ok="editMembers"
     />
@@ -74,6 +83,10 @@ export default {
       selectedRow: null,
       tableFields: [
         'name',
+        {
+          key: 'isSuperRole',
+          label: 'Super Role'
+        },
         {
           key: 'members',
           thClass: 'members-column'
@@ -145,8 +158,8 @@ export default {
           const roles = store.readQuery({ query: ROLES_QUERY }).roles
           store.writeQuery({ query: ROLES_QUERY, data: { roles: [...roles, createRole] } })
         }
-      }).catch(() => {
-        EventBus.$emit('error', 'Something went wrong while adding role ' + roleName)
+      }).catch((error) => {
+        EventBus.$emit('error', 'Something went wrong while adding role ' + roleName, error)
       })
     },
     removeMember (role, memberId) {
@@ -200,6 +213,6 @@ export default {
 
 <style>
 .members-column {
-  width: 75%;
+  width: 65%;
 }
 </style>

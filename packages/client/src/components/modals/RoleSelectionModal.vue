@@ -4,7 +4,7 @@
     centered
     lazy
     :title="'Edit roles of ' + email"
-    @ok="onOk"
+    @ok="confirmOk"
     @show="reset"
   >
     <b-overlay :show="$apollo.loading" no-fade>
@@ -38,7 +38,7 @@ export default {
     reset: function () {
       this.selection = this.initialSelection
     },
-    onOk: function () {
+    confirmOk: function () {
       if (this.selectionChanged) {
         if (this.isPromotedToSuperUser) {
           this.$bvModal.msgBoxConfirm('Are you sure you want to make ' + this.email + ' a super user?', {
