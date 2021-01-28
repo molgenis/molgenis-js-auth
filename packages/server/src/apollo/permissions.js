@@ -11,13 +11,12 @@ module.exports = shield(
     Query: {
       "me": allow,
       "application": allow,
-      "*": isSu
     },
-    Mutation: {
-      "*": isSu
-    }
+    User: allow,
+    Application: allow
   },
   { 
-    allowExternalErrors: true 
+    allowExternalErrors: true,
+    fallbackRule: isSu
   }
 )

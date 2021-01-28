@@ -108,7 +108,7 @@ export default {
     async updateUserRoles (userId, roles) {
       await this.$apollo.mutate({
         mutation: gql`
-          mutation($userId: String!, $roles: [String]!) {
+          mutation UpdateUserRoles ($userId: String!, $roles: [String]!) {
             updateUserRoles(userId: $userId, roles: $roles) {
               id
               roles
@@ -135,7 +135,7 @@ export default {
     },
     async registerUser (userId) {
       await this.$apollo.mutate({
-        mutation: gql`mutation ($userId: String!) {
+        mutation: gql`mutation Register ($userId: String!) {
           register(userId: $userId) {
             id
             email
@@ -157,7 +157,7 @@ export default {
     async unregisterUser (userId) {
       await this.$apollo.mutate({
         mutation: gql`
-          mutation($userId: String!) {
+          mutation Unregister ($userId: String!) {
             unregister(userId: $userId) {
               id
               registered
