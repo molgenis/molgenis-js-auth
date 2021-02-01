@@ -1,4 +1,4 @@
-# armadillo-js-permissions
+# Permission UI
 
 ## Project setup
 ```

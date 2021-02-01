@@ -1,13 +1,13 @@
 # Permission manager
-Armadillo permission manager.
+Permission manager for Fusion Auth applications.
 
 ## Architrecture
 There are 2 components in this repository. 
 
 - An Apollo server
-  This server communicates with the authentication server of the Armadillo
+  This server communicates with a Fusion Auth server.
 - An authentication user interface
-  This allows you to add roles and users to the Armadillo
+  This allows you to add roles and users to a Fusion Auth application.
 
 This is deployed via one docker which serves both services.
 ## Usage
