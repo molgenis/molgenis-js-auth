@@ -1,4 +1,4 @@
-# armadillo-js-permissions
+# molgenis-js-permissions
 
 ## Project setup
 ```

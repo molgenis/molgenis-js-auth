@@ -5,9 +5,9 @@ pipeline {
         }
     }
     environment {
-        REPOSITORY = 'molgenis/molgenis-js-armadillo'
-        REPOSITORY_AUTH = 'molgenis/armadillo-auth'
-        LOCAL_REPOSITORY_AUTH = "${LOCAL_REGISTRY}/molgenis/armadillo-auth"
+        REPOSITORY = 'molgenis/molgenis-js-auth'
+        REPOSITORY_AUTH = 'molgenis/molgenis-auth'
+        LOCAL_REPOSITORY_AUTH = "${LOCAL_REGISTRY}/molgenis/molgenis-auth"
         TIMESTAMP = sh(returnStdout: true, script: "date -u +'%F_%H-%M-%S'").trim()
         CHART_VERSION = '0.8.1'
         DOCKER_CONFIG="/root/.docker"
@@ -21,7 +21,7 @@ pipeline {
                 container('vault') {
                     script {
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
-                        env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-js-armadillo secret/ops/token/codecov', returnStdout: true)
+                        env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-js-auth secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
                         env.DOCKERHUB_AUTH = sh(script: 'vault read -field=value secret/gcc/token/dockerhub', returnStdout: true)
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
@@ -50,7 +50,7 @@ pipeline {
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
                     sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                    sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-js-armadillo"
+                    sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-js-auth"
                 }
             }
             post {
