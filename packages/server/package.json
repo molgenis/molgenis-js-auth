@@ -1,5 +1,5 @@
 {
-  "name": "armadillo-auth-server",
+  "name": "molgenis-auth-server",
   "version": "0.2.2",
   "private": true,
   "description": "",
@@ -15,7 +15,7 @@
   "dependencies": {
     "apollo-datasource-rest": "^0.9.3",
     "apollo-server-express": "^2.17.0",
-    "armadillo-auth-ui": "^0.2.0",
+    "molgenis-auth-ui": "^0.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express-openid-connect": "^1.0.2",
