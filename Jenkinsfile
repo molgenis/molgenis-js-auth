@@ -142,7 +142,7 @@ pipeline {
                     steps {
                         container (name: 'kaniko', shell: '/busybox/sh') {
                             script {
-                                env.TAG = sh(script: "#!/busybox/sh\ngrep version package.json | head -n1 | cut -d'=' -f2", returnStdout: true).trim()
+                                env.TAG = sh(script: "#!/busybox/sh\nnode -p \"require('./package.json').version\"", returnStdout: true).trim()
                             }
                             sh "#!/busybox/sh\necho '{\"auths\": {\"https://index.docker.io/v1/\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
                             sh "#!/busybox/sh\necho"
