@@ -1,0 +1,12 @@
+# Requirements
+- [ ] MUST be able to view all roles within the application context
+- [ ] MUST be able to add and delete roles within the application context
+- [ ] MUST be able to view all people who have a role on the application
+- [ ] MUST be able to view all roles which have people assigned on
+- [ ] MUST be able to assign and remove roles
+- [ ] MUST be able to choose from all authenticated users in the authentication server
+- [ ] MUST be able to choose from all created roles belonging to the application
+- [ ] MUST have scoped registration tied to the Fusion Auth application in the deployment
+- [ ] MUST be able to login to the application as super user
+- [ ] MUST only be accessible if user has "super user" role on the application
+- [ ] MUST not be able to see or manage other applications defined in Fusion Auth
