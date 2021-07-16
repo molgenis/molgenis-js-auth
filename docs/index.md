@@ -5,4 +5,4 @@
 layout: home
 ---
 
-The [FusionAuth](https://fusionauth.io) role manager is a way to manage registrations and roles for your application. We assume you application is configured in a [FusionAuth](https://fusionauth.io) authentication server.
+The [FusionAuth](https://fusionauth.io) role manager is a way to manage registrations and roles for your application. We assume your application is configured in a [FusionAuth](https://fusionauth.io) authentication server.

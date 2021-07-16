@@ -17,11 +17,11 @@ Before you can create roles and assign them to users you first need to register 
 #### Register users
 Navigate to the [FusionAuth Role Manager](https://armadillo-auth.test.molgenis.org)
 
-Login.
+Log in.
 
 ![](/assets/app_auth-login.png)
 
-Click on the "Register"-button
+Click on the "Register User"-button
 
 ![](/assets/app_auth-register.png)
 
@@ -29,14 +29,13 @@ Search for the specific user
 
 <img src="/assets/app_auth-register-search.png" width="450rem"/>
 
-Select the user by clicking on the row in the table and click on "OK"
+Select the user and click on "OK"
 
 <img src="/assets/app_auth-register-select.png" width="450rem"/>
 
 #### Unregister users
-When users are for some reason not allowed on the platform anymore. You can unregister them as well. 
-
-Select the user you want to unregister. 
+When users are for some reason not allowed on the platform anymore. You can unregister them as well.
+Click on the “Unregister User”-button and select the user you want to unregister. 
 
 ![](/assets/app_auth-unregister-select.png)
 
@@ -56,7 +55,7 @@ Click on "Ok"
 ### Give people access to the data
 Navigate to the [FusionAuth Role Manager](https://armadillo-auth.test.molgenis.org)
 
-Login.
+Log in.
 
 ![](/assets/app_auth-login.png)
 
@@ -70,8 +69,8 @@ Click on "Create role"
 
 [Fill in the role]({{ site.baseurl }}{% link _pages/app_manager-armadillo.md %}). 
 
-> Depending on the application you are working in the role needs to comply to specific syntax. 
-> We now have one application which is using the "FusionAuth Role Manager" which is the [Armadillo]({{ site.baseurl }}{% link _pages/app_manager-armadillo.md %}).
+> Depending on the application you are working in the role needs to comply to a specific syntax. 
+> We now have one application that is using the "FusionAuth Role Manager", which is the [Armadillo]({{ site.baseurl }}{% link _pages/app_manager-armadillo.md %}).
 
 Click on the created role
 

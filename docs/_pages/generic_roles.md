@@ -6,7 +6,7 @@ nav_order: 1
 permalink: /roles/
 ---
 
-We distinguish 2 roles which use the FusionAuth Role Manager.
+We distinguish two roles which use the FusionAuth Role Manager.
 
 |                                             | Application manager | System administrator |
 | ------------------------------------------- | ------------------- | -------------------- |

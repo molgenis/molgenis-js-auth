@@ -10,11 +10,11 @@ There are several ways to deploy the FusionAuth Role Manager.
 
 - Local using the [docker image](https://hub.docker.com/r/molgenis/molgenis-auth)
 
-Or for specific application like the Armadillo
+Or for a specific application like the Armadillo
 - On a kubernetes cluster using a [helm chart](https://github.com/molgenis/molgenis-ops-helm/tree/master/charts/molgenis-armadillo)
 - On VM's using an [Ansible Galaxy collection](https://galaxy.ansible.com/molgenis/armadillo)
 
-The FusionAuth Role Manager needs the following properties at deploy time. These are all environment variables and need to be treated as such during the deploy of the service.
+The FusionAuth Role Manager needs the following properties at deploy time. These are all environment variables and need to be treated as such during the deployment of the service.
 
 #### FusionAuth Role Manager specific properties
 - `SERVER_PORT=4000`
