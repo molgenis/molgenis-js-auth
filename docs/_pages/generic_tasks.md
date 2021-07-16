@@ -2,7 +2,6 @@
 layout: page
 title: Tasks
 nav_order: 2
-permalink: /tasks/
 ---
 
 There are a few tasks which need to be performed by all of the roles defined for the authentication part.

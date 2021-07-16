@@ -4,7 +4,6 @@ title: Application manager - Armadillo
 parent: Application manager
 grand_parent: Roles
 nav_order: 1
-permalink: /app/manager/armadillo
 ---
 
 Depending on the application you are working in the role needs to comply to a specific syntax. We now have one application which is using the “FusionAuth Role Manager” which is the Armadillo.

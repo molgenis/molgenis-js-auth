@@ -3,7 +3,6 @@ layout: page
 title: Roles
 has_children: true
 nav_order: 1
-permalink: /roles/
 ---
 
 We distinguish two roles which use the FusionAuth Role Manager.

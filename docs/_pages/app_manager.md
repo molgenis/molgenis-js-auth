@@ -3,7 +3,6 @@ layout: page
 title: Application manager
 parent: Roles
 nav_order: 1
-permalink: /app/manager
 ---
 
 The application manager is responsible for managing three tasks in the FusionAuth Role Manager:
