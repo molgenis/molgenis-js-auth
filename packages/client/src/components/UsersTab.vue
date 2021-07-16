@@ -64,7 +64,7 @@
 import gql from 'graphql-tag'
 import RoleSelectionModal from '@/components/modals/RoleSelectionModal'
 import RegisterUserModal from '@/components/modals/RegisterUserModal.vue'
-import { REGISTERED_USERS_QUERY, ROLES_QUERY } from '@/assets/queries.js'
+import { REGISTERED_USERS_QUERY, ROLES_QUERY } from '@{{ site.baseurl }}/assets/images/queries.js'
 
 export default {
   components: {

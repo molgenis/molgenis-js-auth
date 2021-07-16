@@ -70,8 +70,8 @@
 import gql from 'graphql-tag'
 import CreateRoleModal from '@/components/modals/CreateRoleModal.vue'
 import MemberSelectionModal from '@/components/modals/MemberSelectionModal.vue'
-import { ROLES_QUERY, REGISTERED_USERS_QUERY } from '@/assets/queries.js'
-import { EventBus } from '@/assets/eventbus'
+import { ROLES_QUERY, REGISTERED_USERS_QUERY } from '@{{ site.baseurl }}/assets/images/queries.js'
+import { EventBus } from '@{{ site.baseurl }}/assets/images/eventbus'
 
 export default {
   components: {

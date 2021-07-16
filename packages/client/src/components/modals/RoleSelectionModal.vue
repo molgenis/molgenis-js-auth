@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { ROLES_QUERY } from '@/assets/queries.js'
+import { ROLES_QUERY } from '@{{ site.baseurl }}/assets/images/queries.js'
 
 export default {
   data () {

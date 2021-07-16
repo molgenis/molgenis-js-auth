@@ -1,9 +1,10 @@
 ---
 layout: page
-title: Application manager - Armadillo
+title: Armadillo
 parent: Application manager
 grand_parent: Roles
 nav_order: 1
+permalink: /app/manager/armadillo
 ---
 
 Depending on the application you are working in the role needs to comply to a specific syntax. We now have one application which is using the “FusionAuth Role Manager” which is the Armadillo.
@@ -19,11 +20,11 @@ Navigate to the [Minio](https://armadillo-minio.test.molgenis.org).
 
 Log in.
 
-<img src="/assets/app_storage-login.png" width="450rem"/>
+<img src="{{ site.baseurl }}/assets/images/app_storage-login.png" width="450rem"/>
 
 Check the bucket name:
 
-<img src="/assets/app_storage-buckets.png" width="600rem"/>
+<img src="{{ site.baseurl }}/assets/images/app_storage-buckets.png" width="600rem"/>
 
 Navigate back to the [FusionAuth Role Manager](https://armadillo-auth.test.molgens.org)
 
@@ -31,7 +32,7 @@ Navigate to the "Role"-tab
 
 Create a new role.
 
-<img src="/assets/app_armadillo-auth-new-role.png" width="400rem"/>
+<img src="{{ site.baseurl }}/assets/images/app_armadillo-auth-new-role.png" width="400rem"/>
 
 
 

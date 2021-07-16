@@ -3,6 +3,7 @@ layout: page
 title: System administrator
 parent: Roles
 nav_order: 3
+permalink: /app/sysadmin
 ---
 
 There are several ways to deploy the FusionAuth Role Manager.

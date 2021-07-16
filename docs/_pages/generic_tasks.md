@@ -2,6 +2,7 @@
 layout: page
 title: Tasks
 nav_order: 2
+permalink: /tasks/
 ---
 
 There are a few tasks which need to be performed by all of the roles defined for the authentication part.
@@ -13,7 +14,7 @@ One is on a national level: [SRAM](https://sbs.sram.surf.nl/). The other one is 
 
 To acquire an account you need to login via ELIXIR.
 
-<img src="/assets/fusionauth_login.png" width="250rem"/>
+<img src="{{ site.baseurl }}/assets/images/fusionauth_login.png" width="250rem"/>
 
 You can then follow [this](https://youtu.be/Gj0uANX8nIw) video to create your account.
 
