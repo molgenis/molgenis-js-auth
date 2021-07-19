@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client'
-import { EventBus } from '@{{ site.baseurl }}/assets/images/eventbus'
+import { EventBus } from '@/assets/eventbus'
 
 // Install the vue plugin
 Vue.use(VueApollo)

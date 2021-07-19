@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { EventBus } from '@{{ site.baseurl }}/assets/images/eventbus'
+import { EventBus } from '@/assets/eventbus'
 
 export default {
   data () {

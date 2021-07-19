@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { REGISTERED_USERS_QUERY } from '@{{ site.baseurl }}/assets/images/queries.js'
+import { REGISTERED_USERS_QUERY } from '@/assets/queries.js'
 
 export default {
   data () {
